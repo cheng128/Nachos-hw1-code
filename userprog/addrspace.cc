@@ -21,6 +21,9 @@
 #include "machine.h"
 #include "noff.h"
 
+
+bool AddrSpace::PhyPageStatus[NumPhysPages] = {FALSE};
+int AddrSpace::NumFreePhyPages = NumPhysPages;
 //----------------------------------------------------------------------
 // SwapHeader
 // 	Do little endian to big endian conversion on the bytes in the 
@@ -53,17 +56,17 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
-    pageTable = new TranslationEntry[NumPhysPages];
-    for (unsigned int i = 0; i < NumPhysPages; i++) {
-	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
-	pageTable[i].physicalPage = i;
-//	pageTable[i].physicalPage = 0;
-	pageTable[i].valid = TRUE;
-//	pageTable[i].valid = FALSE;
-	pageTable[i].use = FALSE;
-	pageTable[i].dirty = FALSE;
-	pageTable[i].readOnly = FALSE;  
-    }
+//     pageTable = new TranslationEntry[NumPhysPages];
+//     for (unsigned int i = 0; i < NumPhysPages; i++) {
+// 	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
+// 	pageTable[i].physicalPage = i;
+// //	pageTable[i].physicalPage = 0;
+// 	pageTable[i].valid = TRUE;
+// //	pageTable[i].valid = FALSE;
+// 	pageTable[i].use = FALSE;
+// 	pageTable[i].dirty = FALSE;
+// 	pageTable[i].readOnly = FALSE;  
+//     }
     
     // zero out the entire address space
 //    bzero(kernel->machine->mainMemory, MemorySize);
@@ -115,10 +118,28 @@ AddrSpace::Load(char *fileName)
 //	cout << "number of pages of " << fileName<< " is "<<numPages<<endl;
     size = numPages * PageSize;
 
-    ASSERT(numPages <= NumPhysPages);		// check we're not trying
+    ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
 						// to run anything too big --
 						// at least until we have
 						// virtual memory
+
+
+    pageTable = new TranslationEntry[numPages];
+    for(unsigned int i = 0, idx = 0; i < numPages; i++) {
+        pageTable[i].virtualPage = i;
+        while(idx < NumPhysPages && AddrSpace::PhyPageStatus[idx] == FALSE)
+        {idx++;
+        cout<< idx << endl;
+        }
+        AddrSpace::PhyPageStatus[idx] = TRUE;
+        AddrSpace::NumFreePhyPages--;
+        bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
+        pageTable[i].physicalPage = idx;
+        pageTable[i].valid = true;
+        pageTable[i].use = false;
+        pageTable[i].dirty = false;
+        pageTable[i].readOnly = false;
+    }
 
     DEBUG(dbgAddr, "Initializing address space: " << numPages << ", " << size);
 
