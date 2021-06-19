@@ -158,7 +158,9 @@ AddrSpace::Load(char *fileName)
     }
 
     cout << "before Read" << endl;
+    cout << "noffH.initData.size: " << noffH.initData.size << endl;
 	if (noffH.initData.size > 0) {
+        cout << "in if " << endl;
         DEBUG(dbgAddr, "Initializing data segment.");
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
         cout << "Initializing data segment." << endl;
