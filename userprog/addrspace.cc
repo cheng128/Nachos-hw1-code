@@ -79,7 +79,9 @@ AddrSpace::AddrSpace()
 
 AddrSpace::~AddrSpace()
 {
-   delete pageTable;
+    for(int i = 0; i < numPages; i++)
+        AddrSpace::PhyPageStatus[pageTable[i].physicalPage] = FALSE;
+    delete pageTable;
 }
 
 
@@ -127,10 +129,10 @@ AddrSpace::Load(char *fileName)
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
-        while(idx < NumPhysPages && AddrSpace::PhyPageStatus[idx] == FALSE)
+        while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == FALSE)
         {idx++;
-        cout<< idx << endl;
         }
+        cout << idx << endl;
         AddrSpace::PhyPageStatus[idx] = TRUE;
         AddrSpace::NumFreePhyPages--;
         bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
