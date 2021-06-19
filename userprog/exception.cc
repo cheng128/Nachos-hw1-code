@@ -105,8 +105,8 @@ ExceptionHandler(ExceptionType which)
 			break;
 		//<HW3
 		case PageFaultException:
+		unsigned int VirtualAdd = kernel->machine->ReadRegister(BadVAddrReg);
 		{
-			unsigned int VirtualAdd = kernel->machine->ReadRegister(BadVAddrReg);
 			cout << "VirtualAdd: " << VirtualAdd << endl;
 		}
 		break;

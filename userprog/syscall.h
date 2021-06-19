@@ -24,10 +24,6 @@
 #define SC_Join		3
 #define SC_Create	4
 //<TODO
-#define PageFaultException	5
-#define AddressErrorException	6
-#define ReadOnlyException	7
-#define BusErrorException	8
 //TODO>
 #define SC_ThreadFork	9
 #define SC_ThreadYield	10
