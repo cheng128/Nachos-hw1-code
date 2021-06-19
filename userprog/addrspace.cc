@@ -149,8 +149,8 @@ AddrSpace::Load(char *fileName)
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
 	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
-        char *buf;
-        buf = new char[PageSize];
+        char *buf1;
+        buf1 = new char[PageSize];
         executable->ReadAt(buf, noffH.code.size, noffH.code.inFileAddr);
         vm->WriteAt(buf, noffH.code.size, noffH.code.inFileAddr);
         cout << "after write vm code" << endl;
@@ -158,9 +158,9 @@ AddrSpace::Load(char *fileName)
 	if (noffH.initData.size > 0) {
         DEBUG(dbgAddr, "Initializing data segment.");
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
-        char *buf;
-        buf = new char[PageSize];
-        executable->ReadAt(buf, noffH.initData  .size, noffH.initData.inFileAddr);
+        char *buf2;
+        buf2 = new char[PageSize];
+        executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         vm->WriteAt(buf, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "after write vm init" << endl;
     }
