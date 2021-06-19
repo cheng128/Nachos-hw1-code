@@ -109,7 +109,8 @@ ExceptionHandler(ExceptionType which)
 		    cerr << "Unexpected system call " << type << "\n";
  		    break;
 	    }
-	    break;
+	    return;
+		break;
 	}
 	case PageFaultException:
 	{
@@ -145,5 +146,7 @@ ExceptionHandler(ExceptionType which)
 	    cerr << "Unexpected user mode exception" << which << "\n";
 	    break;
     }
+	return;
     ASSERTNOTREACHED();
+	break;
 }
