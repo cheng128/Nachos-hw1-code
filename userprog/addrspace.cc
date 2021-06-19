@@ -160,7 +160,7 @@ AddrSpace::Load(char *fileName)
         DEBUG(dbgAddr, "Initializing data segment.");
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
         char *buf2;
-        buf2 = new char[noffH.initData.size]];
+        buf2 = new char[noffH.initData.size];
         executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "after Read" << endl;
         vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
