@@ -81,7 +81,7 @@ AddrSpace::AddrSpace()
 
 AddrSpace::~AddrSpace()
 {
-    for(int i = 0; i < numPages; i++)
+    for(unsigned int i = 0; i < numPages; i++)
         AddrSpace::PhyPageStatus[pageTable[i].physicalPage] = FALSE;
     delete pageTable;
 }
