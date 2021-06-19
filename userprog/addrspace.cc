@@ -287,12 +287,13 @@ int AddrSpace::pageFault(int vpn)
 	}
 
     loadPage(vpn);
-	
+	cout << "from load page back to pagefault" << endl;
+
 	pageTable[vpn].valid = TRUE;
 	pageTable[vpn].use = FALSE;
 	pageTable[vpn].dirty = FALSE;
 	pageTable[vpn].readOnly = FALSE;
-	
+	cout << "end of pagefault" << endl;
 	return 0;
 }
 
