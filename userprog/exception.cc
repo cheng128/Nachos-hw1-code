@@ -118,7 +118,6 @@ ExceptionHandler(ExceptionType which)
 		cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
 		cout << "currentThread->space: " << kernel->currentThread->space << endl;
 		kernel->currentThread->space->pageFault(vpn);
-		
 		break;
 	}
 	break;
@@ -145,5 +144,5 @@ ExceptionHandler(ExceptionType which)
 	    cerr << "Unexpected user mode exception" << which << "\n";
 	    break;
     }
-    // ASSERTNOTREACHED();
+    ASSERTNOTREACHED();
 }

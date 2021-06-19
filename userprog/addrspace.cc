@@ -294,8 +294,10 @@ int AddrSpace::pageFault(int vpn)
 	pageTable[vpn].dirty = FALSE;
 	pageTable[vpn].readOnly = FALSE;
 	cout << "end of pagefault" << endl;
+
 	return 0;
 }
+
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
