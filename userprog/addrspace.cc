@@ -127,39 +127,44 @@ AddrSpace::Load(char *fileName)
 						// at least until we have
 						// virtual memory
 
-    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
-    cout << PhyPageStatus[32] << endl;
 
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
-        while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == FALSE) idx++;
+        while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == TRUE) idx++;
         AddrSpace::PhyPageStatus[idx] = TRUE;
         AddrSpace::NumFreePhyPages--;
         bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
         pageTable[i].physicalPage = idx;
-        pageTable[i].valid = true;
-        pageTable[i].use = false;
-        pageTable[i].dirty = false;
-        pageTable[i].readOnly = false;
+        pageTable[i].valid = TRUE;
+        pageTable[i].use = FALSE;
+        pageTable[i].dirty = FALSE;
+        pageTable[i].readOnly = FALSE;
     }
 
     DEBUG(dbgAddr, "Initializing address space: " << numPages << ", " << size);
 
+    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
 // then, copy in the code and data segments into memory
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
-	DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
-        	executable->ReadAt(
-		&(kernel->machine->mainMemory[noffH.code.virtualAddr]), 
+	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
+        executable->ReadAt(
+		&(kernel->machine->mainMemory[pageTable[noffH.code.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]), 
 			noffH.code.size, noffH.code.inFileAddr);
+        vm->WriteAt((noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize),
+        noffH.code.size, noffH.code.inFileAddr);
+        cout << "after write vm code" << endl;
     }
 	if (noffH.initData.size > 0) {
         DEBUG(dbgAddr, "Initializing data segment.");
 	DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
         executable->ReadAt(
-		&(kernel->machine->mainMemory[noffH.initData.virtualAddr]),
+		&(kernel->machine->mainMemory[pageTable[noffH.initData.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]),
 			noffH.initData.size, noffH.initData.inFileAddr);
+        vm->WriteAt((noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize),
+        noffH.initData.size, noffH.initData.inFileAddr);
+        cout << "after write vm init" << endl;
     }
 
     delete executable;			// close file
