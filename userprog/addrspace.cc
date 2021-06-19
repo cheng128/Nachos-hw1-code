@@ -298,6 +298,7 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
+    cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
 
     if (physNum == -1)
@@ -308,6 +309,8 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 
     kernel->UsedProcess[physNum] = space;
     vpnTable[physNum] = vpn;
+
+    return physNum;
 }
 
 int AddrSpace::FindFreePage()
@@ -336,7 +339,7 @@ int  AddrSpace::loadPage(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
-    //vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
+    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
 
     return 0;
 }
