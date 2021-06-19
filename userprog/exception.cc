@@ -121,6 +121,7 @@ ExceptionHandler(ExceptionType which)
 		cout << "return Exception" << endl;
 		return;
 	}
+	cout << "before break" << endl;
 	break;
 
 	case AddressErrorException:
