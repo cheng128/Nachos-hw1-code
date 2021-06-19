@@ -156,11 +156,14 @@ AddrSpace::Load(char *fileName)
         vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
         cout << "after write vm code" << endl;
     }
+
 	if (noffH.initData.size > 0) {
         DEBUG(dbgAddr, "Initializing data segment.");
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
+        cout << "Initializing data segment." << endl;
         char *buf2;
         buf2 = new char[noffH.initData.size];
+        cout << "before Read data" << endl;
         executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "after Read" << endl;
         vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
