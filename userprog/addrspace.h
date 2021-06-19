@@ -32,7 +32,7 @@ class AddrSpace {
 
     //<HW3
     int pageFault(int vpn);
-    int AllocPage(AddrSpace* space, int vpn);
+    int AllocPage();
     int FindFreePage();
     int FindVictim();
     //HW3>

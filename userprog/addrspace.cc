@@ -278,11 +278,11 @@ void AddrSpace::RestoreState()
 int AddrSpace::pageFault(int vpn)
 {
     cout << "in pageFault function" << endl;
-    AllocPage(kernel->currentThread->space, vpn);
+    AllocPage();
     
 }
 
-int AddrSpace::AllocPage(AddrSpace* space, int vpn)
+int AddrSpace::AllocPage()
 {
     int physNum = FindFreePage();
 
