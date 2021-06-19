@@ -134,7 +134,10 @@ AddrSpace::Load(char *fileName)
         while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == TRUE) idx++;
         AddrSpace::PhyPageStatus[idx] = TRUE;
         AddrSpace::NumFreePhyPages--;
+
         bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
+
+        kernel->UsedProcess[idx]=kernel->currentThread->space;
         VmPageTable[idx].virtualPage = i;
         pageTable[i].physicalPage = idx;
         pageTable[i].valid = FALSE;
