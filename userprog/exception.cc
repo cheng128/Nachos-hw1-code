@@ -65,7 +65,7 @@ ExceptionHandler(ExceptionType which)
 			val=kernel->machine->ReadRegister(4);
 			cout << "Print integer:" <<val << endl;
 			return;
-/*		case SC_Exec:
+		case SC_Exec:
 			DEBUG(dbgAddr, "Exec\n");
 			val = kernel->machine->ReadRegister(4);
 			kernel->StringCopy(tmpStr, retVal, 1024);
@@ -73,7 +73,7 @@ ExceptionHandler(ExceptionType which)
 			val = kernel->Exec(val);
 			kernel->machine->WriteRegister(2, val);
 			return;
-*/		case SC_Exit:
+		case SC_Exit:
 			DEBUG(dbgAddr, "Program exit\n");
 			val=kernel->machine->ReadRegister(4);
 			cout << "return value:" << val << endl;
