@@ -317,6 +317,8 @@ int AddrSpace::FindFreePage()
     {
         if(AddrSpace::PhyPageStatus[i]=FALSE)
             return i;
+        else
+            cout << "No Free Page" << endl;
     }
     return -1;
 }
