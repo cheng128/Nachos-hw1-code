@@ -160,8 +160,8 @@ AddrSpace::Load(char *fileName)
         executable->ReadAt(
         &(kernel->machine->mainMemory[pageTable[noffH.code.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]), 
             noffH.code.size, noffH.code.inFileAddr);
-        //executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
-        //vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
+        executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
+        vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
         cout << "after write vm code" << endl;
     }
 
@@ -175,9 +175,9 @@ AddrSpace::Load(char *fileName)
         executable->ReadAt(
         &(kernel->machine->mainMemory[pageTable[noffH.initData.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]),
             noffH.initData.size, noffH.initData.inFileAddr);
-        //executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
+        executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "after Read" << endl;
-        //vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
+        vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
         cout << "after write vm init" << endl;
     }
 
@@ -274,15 +274,29 @@ void AddrSpace::RestoreState()
     kernel->machine->pageTableSize = numPages;
 }
 
-
+//<HW3
 int AddrSpace::pageFault(int vpn)
 {
     cout << "in pageFault function" << endl;
-    AllocPage();
+    kernel->stats->numPageFaults ++;
+    pageTable[vpn].physicalPage = AllocPage(this, vpn);
     
+    if (pageTable[vpn].physicalPage == -1){
+		printf("Error: run out of physical memory\n");
+		ASSERT(FALSE);
+	}
+
+    loadPage(vpn);
+	
+	pageTable[vpn].valid = TRUE;
+	pageTable[vpn].use = FALSE;
+	pageTable[vpn].dirty = FALSE;
+	pageTable[vpn].readOnly = FALSE;
+	
+	return 0;
 }
 
-int AddrSpace::AllocPage()
+int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
     int physNum = FindFreePage();
 
@@ -291,8 +305,9 @@ int AddrSpace::AllocPage()
         int physNum = FindVictim();
     }
 
-    // spaceTable[physNum]->evictPage(vpnTable[physNum]);
-
+    evictPage(vpnTable[physNum]);
+    kernel->UsedProcess[physNum] = space;
+    vpnTable[physNum] = vpn
 }
 
 int AddrSpace::FindFreePage()
@@ -305,3 +320,30 @@ int AddrSpace::FindVictim()
 {
     cout << "in FindVictim function" << endl;
 }
+
+int  AddrSpace::loadPage(int vpn)
+{
+    cout << "in loadPage" << endl;
+
+}
+
+int AddrSpace::evictPage(int vpn)
+{
+    cout << "in evictPage" << endl;
+    if(pageTable[vpn].dirty)
+    {
+        SwapOut(vpn);
+    }
+
+    return 0;
+}
+
+int AddrSpace::SwapOut(int vpn)
+{
+    cout << "in SwapOut function" << endl;
+    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
+    if (vm)
+        cout << "Open vm succeed" << endl;
+    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, vpn*PageSize);
+}  
+//HW3>

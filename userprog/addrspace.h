@@ -32,9 +32,12 @@ class AddrSpace {
 
     //<HW3
     int pageFault(int vpn);
-    int AllocPage();
+    int AllocPage(AddrSpace* space, int vpn);
     int FindFreePage();
     int FindVictim();
+    int loadPage(int vpn);
+    int evictPage(int vpn);
+    int SwapOut(int vpn);
     //HW3>
 
   private:
@@ -53,6 +56,7 @@ class AddrSpace {
     static bool PhyPageStatus[NumPhysPages];
     static int NumFreePhyPages;
     int* vpnTable;
+
     //HW3>
 };
 

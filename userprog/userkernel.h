@@ -16,6 +16,7 @@
 #include "filesys.h"
 #include "machine.h"
 #include "synchdisk.h"
+
 class SynchDisk;
 class UserProgKernel : public ThreadedKernel {
   public:
@@ -38,7 +39,6 @@ class UserProgKernel : public ThreadedKernel {
 #endif // FILESYS
 
   AddrSpace *UsedProcess[NumPhysPages];
-	unsigned int UsedProcessPage[NumPhysPages];
 
   private:
   bool debugUserProg;		// single step user program
