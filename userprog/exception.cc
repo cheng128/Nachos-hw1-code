@@ -127,19 +127,19 @@ ExceptionHandler(ExceptionType which)
 	case AddressErrorException:
 	{
 		cout << "Address Error Exception" << endl;	
+		break;
 	}
-	break;
 
 	case ReadOnlyException:
 	{
 		cout << "Read Only Exception" << endl;
+		break;
 	}
-	break;
 	case BusErrorException:
 	{
 		cout << "BusErrorException" << endl;
+		break;
 	}
-	break;
 		//HW3>
 
 	default:
