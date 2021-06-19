@@ -334,7 +334,7 @@ int  AddrSpace::loadPage(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
-    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
+    //vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
 
     return 0;
 }
@@ -356,7 +356,7 @@ int AddrSpace::SwapOut(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
-    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
+    //vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
 
     return 0;
 }  
