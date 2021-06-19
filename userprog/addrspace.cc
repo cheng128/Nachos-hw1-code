@@ -127,7 +127,7 @@ AddrSpace::Load(char *fileName)
 						// at least until we have
 						// virtual memory
 
-
+    VmPageTable = new TranslationEntry[NumPhysPages];
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
@@ -135,6 +135,7 @@ AddrSpace::Load(char *fileName)
         AddrSpace::PhyPageStatus[idx] = TRUE;
         AddrSpace::NumFreePhyPages--;
         bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
+        VmPageTable[idx] = i;
         pageTable[i].physicalPage = idx;
         pageTable[i].valid = TRUE;
         pageTable[i].use = FALSE;
@@ -152,7 +153,7 @@ AddrSpace::Load(char *fileName)
         char *buf1;
         buf1 = new char[PageSize];
         executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
-        vm->WriteAt(buf1, noffH.code.size, noffH.code.inFileAddr);
+        vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
         cout << "after write vm code" << endl;
     }
 	if (noffH.initData.size > 0) {
@@ -161,7 +162,8 @@ AddrSpace::Load(char *fileName)
         char *buf2;
         buf2 = new char[PageSize];
         executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
-        vm->WriteAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
+        cout << "after Read" << endl;
+        vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
         cout << "after write vm init" << endl;
     }
 

@@ -45,6 +45,7 @@ class AddrSpace {
     //<HW3
     static bool PhyPageStatus[NumPhysPages];
     static int NumFreePhyPages;
+    TranslationEntry *VmPageTable;
     //HW3>
 };
 
