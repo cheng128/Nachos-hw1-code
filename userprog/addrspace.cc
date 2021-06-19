@@ -21,7 +21,8 @@
 #include "machine.h"
 #include "noff.h"
 
-
+bool AddrSpace::PhyPageStatus[NumPhysPages] = {FALSE};
+int AddrSpace::NumFreePhyPages = NumPhysPages;
 //----------------------------------------------------------------------
 // SwapHeader
 // 	Do little endian to big endian conversion on the bytes in the 
