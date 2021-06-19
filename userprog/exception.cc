@@ -122,13 +122,12 @@ ExceptionHandler(ExceptionType which)
 			cout << "Read Only Exception" << endl;
 		}
 		break;
-		//HW3>
 		case BusErrorException:
 		{
 			cout << "BusErrorException" << endl;
 		}
 		break;
-
+		//HW3>
 		default:
 		    cerr << "Unexpected system call " << type << "\n";
  		    break;
