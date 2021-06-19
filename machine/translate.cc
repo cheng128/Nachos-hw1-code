@@ -259,6 +259,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     *physAddr = pageFrame * PageSize + offset;
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG(dbgAddr, "phys addr = " << *physAddr);
-	cout << "phys addr = " << *physAddr <<  << endl;
+	cout << "phys addr = " << *physAddr << endl;
     return NoException;
 }
