@@ -151,8 +151,8 @@ AddrSpace::Load(char *fileName)
 	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
         char *buf1;
         buf1 = new char[PageSize];
-        executable->ReadAt(buf, noffH.code.size, noffH.code.inFileAddr);
-        vm->WriteAt(buf, noffH.code.size, noffH.code.inFileAddr);
+        executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
+        vm->WriteAt(buf1, noffH.code.size, noffH.code.inFileAddr);
         cout << "after write vm code" << endl;
     }
 	if (noffH.initData.size > 0) {
@@ -161,7 +161,7 @@ AddrSpace::Load(char *fileName)
         char *buf2;
         buf2 = new char[PageSize];
         executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
-        vm->WriteAt(buf, noffH.initData.size, noffH.initData.inFileAddr);
+        vm->WriteAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "after write vm init" << endl;
     }
 
