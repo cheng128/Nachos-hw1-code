@@ -93,7 +93,7 @@ Machine::ReadMem(int addr, int size, int *value)
     
     exception = Translate(addr, &physicalAddress, size, FALSE);
     if (exception != NoException) {
-		cout << "exception: " << exception << endl;
+		cout << "ReadMem exception: " << exception << endl;
 		RaiseException(exception, addr);
 	return FALSE;
     }
