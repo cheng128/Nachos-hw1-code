@@ -160,9 +160,10 @@ AddrSpace::Load(char *fileName)
         // executable->ReadAt(
         // &(kernel->machine->mainMemory[pageTable[noffH.code.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]), 
         //     noffH.code.size, noffH.code.inFileAddr);
-        executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
-        vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
-        cout << "after write vm code" << endl;
+        int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
+        cout << "Load executable: " << a << endl;
+        int b = vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
+        cout << "after write vm code: " << b << endl;
     }
 
 	if (noffH.initData.size > 0) {
@@ -175,10 +176,10 @@ AddrSpace::Load(char *fileName)
         //executable->ReadAt(
         //&(kernel->machine->mainMemory[pageTable[noffH.initData.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]),
         //    noffH.initData.size, noffH.initData.inFileAddr);
-        executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
-        cout << "after Read" << endl;
-        vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
-        cout << "after write vm init" << endl;
+        int a executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
+        cout << "Load executable init data: " << a << endl;
+        int b = vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
+        cout << "after write vm init: " << b << endl;
     }
 
     delete executable;			// close file
