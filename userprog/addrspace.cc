@@ -22,8 +22,6 @@
 #include "noff.h"
 
 
-bool AddrSpace::PhyPageStatus[NumPhysPages] = {FALSE};
-int AddrSpace::NumFreePhyPages = NumPhysPages;
 //----------------------------------------------------------------------
 // SwapHeader
 // 	Do little endian to big endian conversion on the bytes in the 
@@ -56,6 +54,9 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
+    for(int i = 0; i < NumPhysPages; i++)
+        AddrSpace::PhyPageStatus[i] = FALSE;
+    AddrSpace::NumFreePhyPages = NumPhysPages;
 //     pageTable = new TranslationEntry[NumPhysPages];
 //     for (unsigned int i = 0; i < NumPhysPages; i++) {
 // 	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
@@ -126,18 +127,12 @@ AddrSpace::Load(char *fileName)
 						// virtual memory
 
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
-    if (vm == NULL)
-        cout << "failed Open" << endl;
-    else
-        cout << "opened vm" << endl;
+    cout << PhyPageStatus[32] << endl;
 
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
-        while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == FALSE)
-        {idx++;
-        }
-        cout << idx << endl;
+        while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == FALSE) idx++;
         AddrSpace::PhyPageStatus[idx] = TRUE;
         AddrSpace::NumFreePhyPages--;
         bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
