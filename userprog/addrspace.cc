@@ -157,9 +157,9 @@ AddrSpace::Load(char *fileName)
 	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
         char *buf1;
         buf1 = new char[noffH.code.size];
-        executable->ReadAt(
+        /*executable->ReadAt(
         &(kernel->machine->mainMemory[pageTable[noffH.code.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]), 
-            noffH.code.size, noffH.code.inFileAddr);
+        */    noffH.code.size, noffH.code.inFileAddr);
         executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
         vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
         cout << "after write vm code" << endl;
@@ -172,10 +172,10 @@ AddrSpace::Load(char *fileName)
         char *buf2;
         buf2 = new char[noffH.initData.size];
         cout << "before Read data" << endl;
-        executable->ReadAt(
+        /*executable->ReadAt(
         &(kernel->machine->mainMemory[pageTable[noffH.initData.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]),
             noffH.initData.size, noffH.initData.inFileAddr);
-        executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
+        */executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "after Read" << endl;
         vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
         cout << "after write vm init" << endl;
@@ -346,7 +346,6 @@ int  AddrSpace::loadPage(int vpn)
     cout << "vpn: " << vpn << endl;
     cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
-    cout << kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize] << endl;
     return 0;
 }
 
