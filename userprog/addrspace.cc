@@ -176,7 +176,7 @@ AddrSpace::Load(char *fileName)
         //executable->ReadAt(
         //&(kernel->machine->mainMemory[pageTable[noffH.initData.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]),
         //    noffH.initData.size, noffH.initData.inFileAddr);
-        int a executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
+        int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "Load executable init data: " << a << endl;
         int b = vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
         cout << "after write vm init: " << b << endl;
