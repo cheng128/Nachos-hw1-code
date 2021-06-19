@@ -107,7 +107,7 @@ ExceptionHandler(ExceptionType which)
 		case PageFaultException:
 		{
 			unsigned int VirtualAdd = kernel->machine->ReadRegister(BadVAddrReg);
-			cout << VirtualAdd<<
+			cout << "VirtualAdd: " << VirtualAdd << endl;
 		}
 		break;
 
@@ -128,6 +128,7 @@ ExceptionHandler(ExceptionType which)
 			cout << "BusErrorException" << endl;
 		}
 		break;
+
 		default:
 		    cerr << "Unexpected system call " << type << "\n";
  		    break;
