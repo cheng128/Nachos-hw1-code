@@ -125,7 +125,9 @@ AddrSpace::Load(char *fileName)
 						// at least until we have
 						// virtual memory
 
-
+    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
+    if (vm == NULL)
+        cout << "failed Open" << endl;
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
