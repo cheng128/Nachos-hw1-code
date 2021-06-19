@@ -303,16 +303,21 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     if (physNum == -1)
     {
         int physNum = FindVictim();
+        evictPage(vpnTable[physNum]);
     }
 
-    evictPage(vpnTable[physNum]);
     kernel->UsedProcess[physNum] = space;
-    vpnTable[physNum] = vpn
+    vpnTable[physNum] = vpn;
 }
 
 int AddrSpace::FindFreePage()
 {
     cout << "in FindFreePage function" << endl;
+    for(unsigned int i=0; i<NumPhysPages; i++)
+    {
+        if(AddrSpace::PhyPageStatus[i]=FALSE)
+            return i;
+    }
     return -1;
 }
 
