@@ -344,6 +344,8 @@ int AddrSpace::SwapOut(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
-    vm->WriteAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, vpn*PageSize);
+    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, vpn*PageSize);
+
+    return 0;
 }  
 //HW3>
