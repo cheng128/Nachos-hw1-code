@@ -315,7 +315,7 @@ int AddrSpace::FindFreePage()
     cout << "in FindFreePage function" << endl;
     for(unsigned int i=0; i<NumPhysPages; i++)
     {
-        if(AddrSpace::PhyPageStatus[i]=FALSE)
+        if(AddrSpace::PhyPageStatus[i]==FALSE)
             return i;
         else
             cout << "No Free Page" << endl;
