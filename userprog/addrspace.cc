@@ -157,6 +157,7 @@ AddrSpace::Load(char *fileName)
         cout << "after write vm code" << endl;
     }
 
+    cout << "before Read" << endl;
 	if (noffH.initData.size > 0) {
         DEBUG(dbgAddr, "Initializing data segment.");
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
