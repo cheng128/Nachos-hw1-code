@@ -137,7 +137,6 @@ AddrSpace::Load(char *fileName)
 
         bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
 
-        kernel->UsedProcess[idx]=kernel->currentThread->space;
         VmPageTable[idx].virtualPage = i;
         pageTable[i].physicalPage = idx;
         pageTable[i].valid = FALSE;
