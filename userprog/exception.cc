@@ -56,6 +56,7 @@ ExceptionHandler(ExceptionType which)
 
     switch (which) {
 	case SyscallException:
+	{
 	    switch(type) {
 		case SC_Halt:
 		    DEBUG(dbgAddr, "Shutdown, initiated by user program.\n");
@@ -103,36 +104,37 @@ ExceptionHandler(ExceptionType which)
 			return;
 			ASSERTNOTREACHED();
 			break;
-		//<HW3
-		case PageFaultException:
-		{
-			unsigned int VirtualAdd = kernel->machine->ReadRegister(BadVAddrReg)/PageSize;
-			cout << "VirtualAdd: " << VirtualAdd << endl;
-		}
-		break;
-
-		case AddressErrorException:
-		{
-			cout << "Address Error Exception" << endl;	
-		}
-		break;
-
-		case ReadOnlyException:
-		{
-			cout << "Read Only Exception" << endl;
-		}
-		break;
-		case BusErrorException:
-		{
-			cout << "BusErrorException" << endl;
-		}
-		break;
-		//HW3>
 		default:
 		    cerr << "Unexpected system call " << type << "\n";
  		    break;
 	    }
 	    break;
+	}
+	case PageFaultException:
+	{
+		unsigned int VirtualAdd = kernel->machine->ReadRegister(BadVAddrReg)/PageSize;
+		cout << "VirtualAdd: " << VirtualAdd << endl;
+	}
+	break;
+
+	case AddressErrorException:
+	{
+		cout << "Address Error Exception" << endl;	
+	}
+	break;
+
+	case ReadOnlyException:
+	{
+		cout << "Read Only Exception" << endl;
+	}
+	break;
+	case BusErrorException:
+	{
+		cout << "BusErrorException" << endl;
+	}
+	break;
+		//HW3>
+
 	default:
 	    cerr << "Unexpected user mode exception" << which << "\n";
 	    break;
