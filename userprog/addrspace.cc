@@ -59,17 +59,17 @@ AddrSpace::AddrSpace()
         AddrSpace::PhyPageStatus[i] = FALSE;
     AddrSpace::NumFreePhyPages = NumPhysPages;
 
-    pageTable = new TranslationEntry[NumPhysPages];
-    for (unsigned int i = 0; i < NumPhysPages; i++) {
-	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
-	pageTable[i].physicalPage = i;
-//	pageTable[i].physicalPage = 0;
-	// pageTable[i].valid = TRUE;
-	pageTable[i].valid = FALSE;
-	pageTable[i].use = FALSE;
-	pageTable[i].dirty = FALSE;
-	pageTable[i].readOnly = FALSE;  
-    }
+//     pageTable = new TranslationEntry[NumPhysPages];
+//     for (unsigned int i = 0; i < NumPhysPages; i++) {
+// 	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
+// 	pageTable[i].physicalPage = i;
+// //	pageTable[i].physicalPage = 0;
+// 	// pageTable[i].valid = TRUE;
+// 	pageTable[i].valid = FALSE;
+// 	pageTable[i].use = FALSE;
+// 	pageTable[i].dirty = FALSE;
+// 	pageTable[i].readOnly = FALSE;  
+//     }
     // zero out the entire address space
 //    bzero(kernel->machine->mainMemory, MemorySize);
 }
@@ -127,26 +127,26 @@ AddrSpace::Load(char *fileName)
     //                                             // at least until we have
     //                                             // virtual memory
 
-    // VmPageTable = new TranslationEntry[NumPhysPages];
-    // pageTable = new TranslationEntry[numPages];
-    // for(unsigned int i = 0, idx = 0; i < numPages; i++) {
-    //     pageTable[i].virtualPage = i;
-    //     while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == TRUE) idx++;
-    //     AddrSpace::PhyPageStatus[idx] = TRUE;
-    //     AddrSpace::NumFreePhyPages--;
-    //     bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
-    //     VmPageTable[idx].virtualPage = i;
-    //     pageTable[i].physicalPage = idx;
-    //     pageTable[i].valid = FALSE;
-    //     pageTable[i].use = FALSE;
-    //     pageTable[i].dirty = FALSE;
-    //     pageTable[i].readOnly = FALSE;
-    // }
+    VmPageTable = new TranslationEntry[NumPhysPages];
+    pageTable = new TranslationEntry[numPages];
+    for(unsigned int i = 0, idx = 0; i < numPages; i++) {
+        pageTable[i].virtualPage = i;
+        while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == TRUE) idx++;
+        AddrSpace::PhyPageStatus[idx] = TRUE;
+        AddrSpace::NumFreePhyPages--;
+        bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
+        VmPageTable[idx].virtualPage = i;
+        pageTable[i].physicalPage = idx;
+        pageTable[i].valid = FALSE;
+        pageTable[i].use = FALSE;
+        pageTable[i].dirty = FALSE;
+        pageTable[i].readOnly = FALSE;
+    }
 
     DEBUG(dbgAddr, "Initializing address space: " << numPages << ", " << size);
 
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
-    
+
 // then, copy in the code and data segments into memory
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
