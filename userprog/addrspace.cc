@@ -55,7 +55,7 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
-    for(int i = 0; i < NumPhysPages; i++)
+    for(unsigned int i = 0; i < NumPhysPages; i++)
         AddrSpace::PhyPageStatus[i] = FALSE;
     AddrSpace::NumFreePhyPages = NumPhysPages;
 
