@@ -346,7 +346,7 @@ int  AddrSpace::loadPage(int vpn)
     cout << "vpn: " << vpn << endl;
     cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
-
+    cout << kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize] << endl;
     return 0;
 }
 
