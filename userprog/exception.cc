@@ -48,6 +48,7 @@
 //	are in machine.h.
 //----------------------------------------------------------------------
 
+
 void
 ExceptionHandler(ExceptionType which)
 {
@@ -112,8 +113,12 @@ ExceptionHandler(ExceptionType which)
 	}
 	case PageFaultException:
 	{
-		unsigned int VirtualAdd = kernel->machine->ReadRegister(BadVAddrReg)/PageSize;
+		unsigned int vpn = kernel->machine->ReadRegister(BadVAddrReg)/PageSize;
 		cout << "VirtualAdd: " << VirtualAdd << endl;
+
+		kernel->currentThread->space->pageFault(vpn);
+		
+		break;
 	}
 	break;
 

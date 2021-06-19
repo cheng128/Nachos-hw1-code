@@ -270,3 +270,9 @@ void AddrSpace::RestoreState()
     kernel->machine->pageTable = pageTable;
     kernel->machine->pageTableSize = numPages;
 }
+
+
+int pageFault(int vpn)
+{
+    cout << "in AddressSapce pagefault function" << endl;
+}

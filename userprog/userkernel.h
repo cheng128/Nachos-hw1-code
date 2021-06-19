@@ -37,8 +37,11 @@ class UserProgKernel : public ThreadedKernel {
     SynchDisk *synchDisk;
 #endif // FILESYS
 
+  AddrSpace *UsedProcess[NumPhysPages];
+	unsigned int UsedProcessPage[NumPhysPages];
+
   private:
-    bool debugUserProg;		// single step user program
+  bool debugUserProg;		// single step user program
 	Thread* t[10];
 	char*	execfile[10];
 	int	execfileNum;
