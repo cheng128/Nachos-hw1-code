@@ -149,21 +149,19 @@ AddrSpace::Load(char *fileName)
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
 	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
-        executable->ReadAt(
-		&(kernel->machine->mainMemory[pageTable[noffH.code.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]), 
-			noffH.code.size, noffH.code.inFileAddr);
-        vm->WriteAt((noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize),
-        noffH.code.size, noffH.code.inFileAddr);
+        char *buf;
+        buf = new char[PageSize];
+        executable->ReadAt(buf, noffH.code.size, noffH.code.inFileAddr);
+        vm->WriteAt(buf, noffH.code.size, noffH.code.inFileAddr);
         cout << "after write vm code" << endl;
     }
 	if (noffH.initData.size > 0) {
         DEBUG(dbgAddr, "Initializing data segment.");
-	DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
-        executable->ReadAt(
-		&(kernel->machine->mainMemory[pageTable[noffH.initData.virtualAddr/PageSize].physicalPage * PageSize + (noffH.code.virtualAddr%PageSize)]),
-			noffH.initData.size, noffH.initData.inFileAddr);
-        vm->WriteAt((noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize),
-        noffH.initData.size, noffH.initData.inFileAddr);
+	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
+        char *buf;
+        buf = new char[PageSize];
+        executable->ReadAt(buf, noffH.initData  .size, noffH.initData.inFileAddr);
+        vm->WriteAt(buf, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "after write vm init" << endl;
     }
 
