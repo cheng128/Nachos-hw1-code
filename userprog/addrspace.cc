@@ -59,17 +59,17 @@ AddrSpace::AddrSpace()
         AddrSpace::PhyPageStatus[i] = FALSE;
     AddrSpace::NumFreePhyPages = NumPhysPages;
 
-//     pageTable = new TranslationEntry[NumPhysPages];
-//     for (unsigned int i = 0; i < NumPhysPages; i++) {
-// 	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
-// 	pageTable[i].physicalPage = i;
-// //	pageTable[i].physicalPage = 0;
-// 	// pageTable[i].valid = TRUE;
-// 	pageTable[i].valid = FALSE;
-// 	pageTable[i].use = FALSE;
-// 	pageTable[i].dirty = FALSE;
-// 	pageTable[i].readOnly = FALSE;  
-//     }
+    pageTable = new TranslationEntry[NumPhysPages];
+    for (unsigned int i = 0; i < NumPhysPages; i++) {
+	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
+	pageTable[i].physicalPage = i;
+//	pageTable[i].physicalPage = 0;
+	// pageTable[i].valid = TRUE;
+	pageTable[i].valid = FALSE;
+	pageTable[i].use = FALSE;
+	pageTable[i].dirty = FALSE;
+	pageTable[i].readOnly = FALSE;  
+    }
     // zero out the entire address space
 //    bzero(kernel->machine->mainMemory, MemorySize);
 }
@@ -122,28 +122,29 @@ AddrSpace::Load(char *fileName)
 //	cout << "number of pages of " << fileName<< " is "<<numPages<<endl;
     size = numPages * PageSize;
 
+    vpnTable = new int[numPages];
     // ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
     //                                             // to run anything too big --
     //                                             // at least until we have
     //                                             // virtual memory
 
-    VmPageTable = new TranslationEntry[NumPhysPages];
-    pageTable = new TranslationEntry[numPages];
-    for(unsigned int i = 0, idx = 0; i < numPages; i++) {
-        pageTable[i].virtualPage = i;
-        while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == TRUE) idx++;
-        AddrSpace::PhyPageStatus[idx] = TRUE;
-        AddrSpace::NumFreePhyPages--;
+    // VmPageTable = new TranslationEntry[NumPhysPages];
+    // pageTable = new TranslationEntry[numPages];
+    // for(unsigned int i = 0, idx = 0; i < numPages; i++) {
+    //     pageTable[i].virtualPage = i;
+    //     while(idx < NumPhysPages-1 && AddrSpace::PhyPageStatus[idx] == TRUE) idx++;
+    //     AddrSpace::PhyPageStatus[idx] = TRUE;
+    //     AddrSpace::NumFreePhyPages--;
 
-        bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
+    //     bzero(&kernel->machine->mainMemory[idx * PageSize], PageSize);
 
-        VmPageTable[idx].virtualPage = i;
-        pageTable[i].physicalPage = idx;
-        pageTable[i].valid = FALSE;
-        pageTable[i].use = FALSE;
-        pageTable[i].dirty = FALSE;
-        pageTable[i].readOnly = FALSE;
-    }
+    //     VmPageTable[idx].virtualPage = i;
+    //     pageTable[i].physicalPage = idx;
+    //     pageTable[i].valid = FALSE;
+    //     pageTable[i].use = FALSE;
+    //     pageTable[i].dirty = FALSE;
+    //     pageTable[i].readOnly = FALSE;
+    // }
 
     DEBUG(dbgAddr, "Initializing address space: " << numPages << ", " << size);
 
@@ -276,5 +277,31 @@ void AddrSpace::RestoreState()
 
 int AddrSpace::pageFault(int vpn)
 {
-    cout << "in AddressSapce pagefault function" << endl;
+    cout << "in pageFault function" << endl;
+    AllocPage(kernel->currentThread->space, vpn);
+    
+}
+
+int AddrSpace::AllocPage(AddrSpace* space, int vpn)
+{
+    int physNum = FindFreePage();
+
+    if (physNum == -1)
+    {
+        int physNum = FindVictim();
+    }
+
+    // spaceTable[physNum]->evictPage(vpnTable[physNum]);
+
+}
+
+int AddrSpace::FindFreePage()
+{
+    cout << "in FindFreePage function" << endl;
+    return -1;
+}
+
+int AddrSpace::FindVictim()
+{
+    cout << "in FindVictim function" << endl;
 }

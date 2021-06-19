@@ -30,7 +30,12 @@ class AddrSpace {
     void SaveState();			// Save/restore address space-specific
     void RestoreState();		// info on a context switch 
 
+    //<HW3
     int pageFault(int vpn);
+    int AllocPage(AddrSpace* space, int vpn);
+    int FindFreePage();
+    int FindVictim();
+    //HW3>
 
   private:
     TranslationEntry *pageTable;	// Assume linear page table translation
@@ -47,7 +52,7 @@ class AddrSpace {
     //<HW3
     static bool PhyPageStatus[NumPhysPages];
     static int NumFreePhyPages;
-    TranslationEntry *VmPageTable;
+    int* vpnTable;
     //HW3>
 };
 

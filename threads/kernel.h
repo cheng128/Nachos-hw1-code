@@ -36,7 +36,7 @@ class ThreadedKernel {
 // a class makes it easier to support multiple kernels, when we
 // get to the networking assignment.
 
-    Thread *currentThread;	// the thread holding the CPU
+    Thread *kernel->currentThread;	// the thread holding the CPU
     Scheduler *scheduler;	// the ready list
     Interrupt *interrupt;	// interrupt status
     Statistics *stats;		// performance metrics
