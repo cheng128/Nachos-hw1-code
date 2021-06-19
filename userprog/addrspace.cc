@@ -319,12 +319,19 @@ int AddrSpace::FindFreePage()
 int AddrSpace::FindVictim()
 {
     cout << "in FindVictim function" << endl;
+
+    return 0;
 }
 
 int  AddrSpace::loadPage(int vpn)
 {
     cout << "in loadPage" << endl;
+    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
+    if (vm)
+        cout << "Open vm succeed" << endl;
+    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
 
+    return 0;
 }
 
 int AddrSpace::evictPage(int vpn)
@@ -344,7 +351,7 @@ int AddrSpace::SwapOut(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
-    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, vpn*PageSize);
+    vm->ReadAt(kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
 
     return 0;
 }  
