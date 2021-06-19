@@ -345,7 +345,8 @@ int  AddrSpace::loadPage(int vpn)
         cout << "Open vm succeed" << endl;
     cout << "vpn: " << vpn << endl;
     cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
-    vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
+    int a = vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
+    cout << a << endl;
     return 0;
 }
 
