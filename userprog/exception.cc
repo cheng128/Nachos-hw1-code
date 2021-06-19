@@ -120,7 +120,7 @@ ExceptionHandler(ExceptionType which)
 		kernel->currentThread->space->pageFault(vpn);
 		cout << "return Exception" << endl;
 	}
-	cout << "before break" << endl;
+	return;
 	break;
 
 	case AddressErrorException:
