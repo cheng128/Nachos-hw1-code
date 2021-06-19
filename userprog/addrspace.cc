@@ -274,7 +274,7 @@ void AddrSpace::RestoreState()
 }
 
 
-int pageFault(int vpn)
+int AddrSpace::pageFault(int vpn)
 {
     cout << "in AddressSapce pagefault function" << endl;
 }
