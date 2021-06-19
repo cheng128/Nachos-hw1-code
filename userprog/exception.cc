@@ -103,9 +103,14 @@ ExceptionHandler(ExceptionType which)
 			return;
 			ASSERTNOTREACHED();
 			break;
-		//<TODO
-		
-		//TODO>
+		//<HW3
+		case PageFaultException:
+		{
+			unsigned int VirtualAdd = kernel->machine->ReadRegister(BadVAddrReg);
+			cout << VirtualAdd<< endl;
+		}
+		break;
+		//HW3>
 		
 		default:
 		    cerr << "Unexpected system call " << type << "\n";
