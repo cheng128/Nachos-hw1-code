@@ -267,11 +267,6 @@ int AddrSpace::pageFault(int vpn)
     cout << "in pageFault function" << endl;
     kernel->stats->numPageFaults ++;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    
-    if (pageTable[vpn].physicalPage == -1){
-		printf("Error: run out of physical memory\n");
-		ASSERT(FALSE);
-	}
 
     loadPage(vpn);
 	cout << "from load page back to pagefault" << endl;
