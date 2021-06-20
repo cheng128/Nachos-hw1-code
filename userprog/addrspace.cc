@@ -335,7 +335,7 @@ int  AddrSpace::loadPage(int vpn)
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     int a = vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
-                        pageTable[vpn].virtualPage*PageSize);
+                        pageTable[vpn].virtualPage * PageSize);
     return 0;
 }
 
@@ -357,15 +357,16 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    cout << "in SwapOut function" << endl;
+    // cout << "in SwapOut function" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
     cout << "phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
-    vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
-                PageSize,
-                pageTable[vpn].virtualPage*PageSize);
 
+    int a = vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
+                PageSize,
+                pageTable[vpn].virtualPage * PageSize);
+    cout << "swap out: " << a << endl;
     return 0;
 }  
 //HW3>
