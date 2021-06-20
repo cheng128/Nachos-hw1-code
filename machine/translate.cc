@@ -213,7 +213,13 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 	    return AddressErrorException;
 	} else if (!pageTable[vpn].valid) {
 	    DEBUG(dbgAddr, "Invalid virtual page # " << virtAddr);
-	    return PageFaultException;
+		unsigned int vpn = kernel->machine->ReadRegister(BadVAddrReg)/PageSize;
+		cout << "VirtualAdd: " << vpn << endl;
+		cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
+		cout << "currentThread->space: " << kernel->currentThread->space << endl;
+		kernel->currentThread->space->pageFault(vpn);
+		// cout << "return Exception" << endl;
+	    // return PageFaultException;
 	}
 	entry = &pageTable[vpn];
     } else {

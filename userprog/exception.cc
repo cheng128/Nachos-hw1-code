@@ -114,12 +114,6 @@ ExceptionHandler(ExceptionType which)
 		}
 		case PageFaultException:
 		{
-			unsigned int vpn = kernel->machine->ReadRegister(BadVAddrReg)/PageSize;
-			cout << "VirtualAdd: " << vpn << endl;
-			cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
-			cout << "currentThread->space: " << kernel->currentThread->space << endl;
-			kernel->currentThread->space->pageFault(vpn);
-			cout << "return Exception" << endl;
 		}
 		break;
 		case AddressErrorException:
