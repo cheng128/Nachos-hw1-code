@@ -295,7 +295,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
-    // cout << "before return " << physNum << endl;
+    cout << "before return " << physNum << endl;
     return physNum;
 }
 
@@ -327,7 +327,7 @@ int AddrSpace::FindVictim()
 
 int  AddrSpace::loadPage(int vpn)
 {
-    // cout << "in loadPage" << endl;
+    cout << "in loadPage" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
