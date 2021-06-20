@@ -327,7 +327,7 @@ int AddrSpace::FindVictim()
 
 int  AddrSpace::loadPage(int vpn)
 {
-    cout << "in loadPage" << endl;
+    // cout << "in loadPage" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
@@ -361,6 +361,7 @@ int AddrSpace::SwapOut(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
+    cout << "phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                 PageSize,
                 pageTable[vpn].virtualPage*PageSize);
