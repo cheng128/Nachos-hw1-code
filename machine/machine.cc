@@ -55,6 +55,8 @@ void CheckEndian()
 Machine::Machine(bool debug)
 {
     int i;
+    for(i=0;i<NumPhysPages;i++)
+		PhyPageStatus[i]=FALSE;
 
     for (i = 0; i < NumTotalRegs; i++)
         registers[i] = 0;

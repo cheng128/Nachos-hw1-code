@@ -38,7 +38,10 @@ class UserProgKernel : public ThreadedKernel {
     SynchDisk *synchDisk;
 #endif // FILESYS
 
+  //<HW3
   AddrSpace *UsedProcess[NumPhysPages];
+  unsigned int invertTable[NumPhysPages];
+  //HW3>
 
   private:
   bool debugUserProg;		// single step user program
