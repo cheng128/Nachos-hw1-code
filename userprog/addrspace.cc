@@ -263,7 +263,7 @@ void AddrSpace::RestoreState()
 //<HW3
 int AddrSpace::pageFault(int vpn)
 {
-    cout << "in pageFault function: vpn = " << vpn << endl;
+    // cout << "in pageFault function: vpn = " << vpn << endl;
     kernel->stats->numPageFaults ++;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
     // cout << "pagefault: " << pageTable[vpn].physicalPage << endl;
@@ -295,7 +295,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
-    cout << "before return physNum: " << physNum << endl;
+    // cout << "before return physNum: " << physNum << endl;
     return physNum;
 }
 
@@ -337,7 +337,7 @@ int  AddrSpace::loadPage(int vpn)
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
 
-    cout << "loadPage vpn: " << vpn << "   a: " << a << endl;
+    cout << "loadPage phy address: " << pageTable[vpn].physicalPage * PageSize << "   a: " << a << endl;
     return 0;
 }
 
