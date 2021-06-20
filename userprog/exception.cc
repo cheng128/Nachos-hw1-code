@@ -114,8 +114,10 @@ ExceptionHandler(ExceptionType which)
 		}
 		case PageFaultException:
 		{
+
 		}
 		break;
+		
 		case AddressErrorException:
 		{
 			cout << "Address Error Exception" << endl;	

@@ -284,13 +284,13 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
     // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
-
+    cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
     {
         int physNum = FindVictim();
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
-
+    cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
 
@@ -320,7 +320,7 @@ int AddrSpace::FindVictim()
 {
     // cout << "in FindVictim function" << endl;
 
-    return (unsigned int)rand()%32;;
+    return (unsigned int)rand()%32;
 }
 
 int  AddrSpace::loadPage(int vpn)
