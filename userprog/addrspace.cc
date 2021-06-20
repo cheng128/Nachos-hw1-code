@@ -300,19 +300,18 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 int AddrSpace::FindFreePage()
 {
     cout << "in FindFreePage function" << endl;
-    for(unsigned int i=0; i<NumPhysPages; i++)
+
+    for(unsigned int i; i<NumPhysPages; i++)
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
-            kernel->machine->PhyPageStatus[i] = TRUE;
+            cout << "PAGE NOT USED" << endl;
+             kernel->machine->PhyPageStatus[i] = TRUE;
             return i;
         }
-        else
-        {
-            cout << "No Free Page" << endl;
-        }
+
     }
-    return -1;
+
 }
 
 int AddrSpace::FindVictim()
