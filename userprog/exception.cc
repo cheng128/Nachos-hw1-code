@@ -120,31 +120,30 @@ ExceptionHandler(ExceptionType which)
 			cout << "currentThread->space: " << kernel->currentThread->space << endl;
 			kernel->currentThread->space->pageFault(vpn);
 			cout << "return Exception" << endl;
-
-			break;
 		}
-		
+		break;
 		case AddressErrorException:
 		{
 			cout << "Address Error Exception" << endl;	
-			break;
+			
 		}
-
+		break;	
 		case ReadOnlyException:
 		{
 			cout << "Read Only Exception" << endl;
-			break;
 		}
+		break;
 		case BusErrorException:
 		{
 			cout << "BusErrorException" << endl;
-			break;
 		}
+		break;
 			//HW3>
 
 		default:
 			cerr << "Unexpected user mode exception" << which << "\n";
 			break;
 	}
+
     ASSERTNOTREACHED();
 }
