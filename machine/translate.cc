@@ -239,7 +239,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 	DEBUG(dbgAddr, "Write to read-only page at " << virtAddr);
 	return ReadOnlyException;
     }
-    pageFrame = entry->physicalPage;
 	cout << "pageFrame: " << pageFrame << endl;
 
     // if the pageFrame is too big, there is something really wrong! 
