@@ -120,8 +120,9 @@ ExceptionHandler(ExceptionType which)
 			cout << "currentThread->space: " << kernel->currentThread->space << endl;
 			kernel->currentThread->space->pageFault(vpn);
 			cout << "return Exception" << endl;
+			break;
 		}
-		break;
+		
 		case AddressErrorException:
 		{
 			cout << "Address Error Exception" << endl;	
@@ -145,5 +146,5 @@ ExceptionHandler(ExceptionType which)
 			break;
 	}
 
-    ASSERTNOTREACHED();
+    //ASSERTNOTREACHED();
 }
