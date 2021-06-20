@@ -343,9 +343,10 @@ int  AddrSpace::loadPage(int vpn)
 
 int AddrSpace::evictPage(int vpn)
 {
-    // cout << "in evictPage" << endl;
+    cout << "in evictPage" << endl;
     if(pageTable[vpn].dirty)
     {
+        
         SwapOut(vpn);
     }
 
@@ -359,7 +360,7 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    // cout << "in SwapOut function" << endl;
+    cout << "in SwapOut function" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
