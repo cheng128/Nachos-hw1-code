@@ -190,7 +190,7 @@ AddrSpace::Execute(char *fileName)
     //kernel->currentThread->space = this;
     this->InitRegisters();		// set the initial register values
     this->RestoreState();		// load page table register
-
+    cout << "before machine run" << endl;
     kernel->machine->Run();		// jump to the user progam
 
     ASSERTNOTREACHED();			// machine->Run never returns;
