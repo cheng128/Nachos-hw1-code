@@ -270,7 +270,7 @@ int AddrSpace::pageFault(int vpn)
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
 	// cout << "from load page back to pagefault" << endl;
-    cout << "vpn: " << vpn << " pageTable[vpn].virtualPage: " << pageTable[vpn].virtualPage << endl;
+    // cout << "vpn: " << vpn << " pageTable[vpn].virtualPage: " << pageTable[vpn].virtualPage << endl;
 	pageTable[vpn].valid = TRUE;
 	pageTable[vpn].use = FALSE;
 	pageTable[vpn].dirty = FALSE;
@@ -364,7 +364,7 @@ int AddrSpace::SwapOut(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
-    // cout << "phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
+    cout << "phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
     int a = vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
