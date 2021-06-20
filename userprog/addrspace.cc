@@ -311,7 +311,7 @@ int AddrSpace::FindFreePage()
         }
 
     }
-
+    return -1;
 }
 
 int AddrSpace::FindVictim()
