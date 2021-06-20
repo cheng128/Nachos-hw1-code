@@ -61,6 +61,7 @@ ExceptionHandler(ExceptionType which)
 			cout << "in SyscallException" << endl;
 			cout << "in SyscallException type: " << type << endl;
 			switch(type) {
+				cout << "in switch" << endl;
 				case SC_Halt:
 					DEBUG(dbgAddr, "Shutdown, initiated by user program.\n");
 					kernel->interrupt->Halt();
