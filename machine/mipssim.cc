@@ -144,6 +144,7 @@ Machine::OneInstruction(Instruction *instr)
     unsigned int rs, rt, imm;
 
     // Execute the instruction (cf. Kane's book)
+	cout << "Execute instruction" << endl;
     switch (instr->opCode) {
 	
       case OP_ADD:
@@ -556,6 +557,7 @@ Machine::OneInstruction(Instruction *instr)
 	break;
     	
       case OP_SYSCALL:
+	  cout << "RaiseException" << endl;
 	RaiseException(SyscallException, 0);
 //	return; 
 	break;
