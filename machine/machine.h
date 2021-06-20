@@ -127,7 +127,7 @@ class Machine {
 // the contents of the TLB are free to be modified by the kernel software.
 
     TranslationEntry *tlb;		// this pointer should be considered 
-					// "read-only" to Nachos kernel code
+								// "read-only" to Nachos kernel code
 
     TranslationEntry *pageTable;
     unsigned int pageTableSize;
