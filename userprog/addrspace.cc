@@ -288,7 +288,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
     {
-        int physNum = FindVictim();
+        physNum = FindVictim();
         cout << "Alloc: victim: " << physNum << endl;
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
