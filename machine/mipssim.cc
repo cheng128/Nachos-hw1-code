@@ -120,10 +120,8 @@ Machine::OneInstruction(Instruction *instr)
 				// in the future
 
     // Fetch instruction 
-	cout << "Fetch instruction" << endl;
     if (!ReadMem(registers[PCReg], 4, &raw))
 	return;			// exception occurred
-	cout << "after Fetch instruction" << endl;
     instr->value = raw;
     instr->Decode();
 
@@ -144,7 +142,6 @@ Machine::OneInstruction(Instruction *instr)
     unsigned int rs, rt, imm;
 
     // Execute the instruction (cf. Kane's book)
-	cout << "Execute instruction" << endl;
     switch (instr->opCode) {
 	
       case OP_ADD:
