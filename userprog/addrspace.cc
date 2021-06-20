@@ -266,7 +266,7 @@ int AddrSpace::pageFault(int vpn)
     // cout << "in pageFault function" << endl;
     kernel->stats->numPageFaults ++;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    cout << "pagefault: " << pageTable[vpn].physicalPage << endl;
+    // cout << "pagefault: " << pageTable[vpn].physicalPage << endl;
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
 	// cout << "from load page back to pagefault" << endl;
@@ -327,7 +327,7 @@ int AddrSpace::FindVictim()
 
 int  AddrSpace::loadPage(int vpn)
 {
-    // cout << "in loadPage" << endl;
+    cout << "in loadPage" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
@@ -357,7 +357,7 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    // cout << "in SwapOut function" << endl;
+    cout << "in SwapOut function" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
