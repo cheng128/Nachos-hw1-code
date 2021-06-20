@@ -263,18 +263,18 @@ void AddrSpace::RestoreState()
 //<HW3
 int AddrSpace::pageFault(int vpn)
 {
-    cout << "in pageFault function" << endl;
+    // cout << "in pageFault function" << endl;
     kernel->stats->numPageFaults ++;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
+    // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
-	cout << "from load page back to pagefault" << endl;
+	// cout << "from load page back to pagefault" << endl;
 
 	pageTable[vpn].valid = TRUE;
 	pageTable[vpn].use = FALSE;
 	pageTable[vpn].dirty = FALSE;
 	pageTable[vpn].readOnly = FALSE;
-	cout << "end of pagefault" << endl;
+	// cout << "end of pagefault" << endl;
 
 	return 0;
 }
@@ -282,7 +282,7 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
-    cout << "in AllocPage function" << endl;
+    // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
 
     if (physNum == -1)
@@ -299,7 +299,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 
 int AddrSpace::FindFreePage()
 {
-    cout << "in FindFreePage function" << endl;
+    // cout << "in FindFreePage function" << endl;
     for(unsigned int i=0; i<NumPhysPages; i++)
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
@@ -318,29 +318,28 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
-    cout << "in FindVictim function" << endl;
+    // cout << "in FindVictim function" << endl;
 
-    return 0;
+    return (unsigned int)rand()%32;;
 }
 
 int  AddrSpace::loadPage(int vpn)
 {
-    cout << "in loadPage" << endl;
+    // cout << "in loadPage" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
-    if (vm)
-        cout << "Open vm succeed" << endl;
-    cout << "vpn: " << vpn << endl;
-    cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
+    // if (vm)
+    //     cout << "Open vm succeed" << endl;
+    // cout << "vpn: " << vpn << endl;
+    // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     int a = vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
                         pageTable[vpn].virtualPage*PageSize);
-    cout << "after read : " << a << endl;
     return 0;
 }
 
 int AddrSpace::evictPage(int vpn)
 {
-    cout << "in evictPage" << endl;
+    // cout << "in evictPage" << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
@@ -356,10 +355,10 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    cout << "in SwapOut function" << endl;
+    // cout << "in SwapOut function" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
-    if (vm)
-        cout << "Open vm succeed" << endl;
+    // if (vm)
+    //     cout << "Open vm succeed" << endl;
     vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                 PageSize,
                 pageTable[vpn].virtualPage*PageSize);
