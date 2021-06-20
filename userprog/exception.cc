@@ -64,6 +64,7 @@ ExceptionHandler(ExceptionType which)
 				kernel->interrupt->Halt();
 				break;
 			case SC_PrintInt:
+				cout << "in SC_PrintInt" << endl;
 				val=kernel->machine->ReadRegister(4);
 				cout << "Print integer:" <<val << endl;
 				return;
