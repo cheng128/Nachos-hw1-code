@@ -148,7 +148,6 @@ AddrSpace::Load(char *fileName)
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
 	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
-
         char *buf1;
         buf1 = new char[noffH.code.size];
         // executable->ReadAt(
@@ -156,7 +155,7 @@ AddrSpace::Load(char *fileName)
         //     noffH.code.size, noffH.code.inFileAddr);
         int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
         cout << "Load executable: " << a << endl;
-        int b = vm->WriteAt(buf1, noffH.code.size, (noffH.code.virtualAddr/PageSize)*PageSize + (noffH.code.virtualAddr%PageSize));
+        int b = vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
         cout << "after write vm code: " << b << endl;
         
     }
@@ -173,7 +172,7 @@ AddrSpace::Load(char *fileName)
         //    noffH.initData.size, noffH.initData.inFileAddr);
         int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "Load executable init data: " << a << endl;
-        int b = vm->WriteAt(buf2, noffH.initData.size, (noffH.initData.virtualAddr/PageSize)*PageSize + (noffH.initData.virtualAddr%PageSize));
+        int b = vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
         cout << "after write vm init: " << b << endl;
     }
 
@@ -300,10 +299,10 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
 
-    if (physNum == -1)
+    if (physNum == -1)                  // no free page
     {
         int physNum = FindVictim();
-        // evictPage(vpnTable[physNum]);
+        evictPage([physNum]);
     }
 
     kernel->UsedProcess[physNum] = space;
@@ -315,21 +314,19 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 int AddrSpace::FindFreePage()
 {
     cout << "in FindFreePage function" << endl;
-    // for(unsigned int i=0; i<NumPhysPages; i++)
-    // {
-    //     if(AddrSpace::PhyPageStatus[i]==FALSE)
-    //         return i;
-    //     else
-    //         cout << "No Free Page" << endl;
-    // }
+    for(unsigned int i=0; i<NumPhysPages; i++)
+    {
+        if(kernel->machine->usedPhyPage[i]==FALSE)
+            return i;
+    }
     return -1;
 }
 
 int AddrSpace::FindVictim()
 {
     cout << "in FindVictim function" << endl;
-
-    return 0;
+    
+    return (unsigned int)rand()%32;
 }
 
 int  AddrSpace::loadPage(int vpn)
@@ -360,7 +357,6 @@ int AddrSpace::evictPage(int vpn)
 int AddrSpace::SwapOut(int vpn)
 {
     cout << "in SwapOut function" << endl;
-    char *filename = "./test/vm";
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
