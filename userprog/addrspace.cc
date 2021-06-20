@@ -270,7 +270,7 @@ int AddrSpace::pageFault(int vpn)
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
 	// cout << "from load page back to pagefault" << endl;
-    pageTable[vpn].virtualPage = vpn;
+    cout << "vpn: " << vpn << " pageTable[vpn].virtualPage: " << pageTable[vpn].virtualPage << endl;
 	pageTable[vpn].valid = TRUE;
 	pageTable[vpn].use = FALSE;
 	pageTable[vpn].dirty = FALSE;
