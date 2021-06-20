@@ -95,10 +95,10 @@ UserProgKernel::Run()
 	cout << "Total threads number is " << execfileNum << endl;
 	for (int n=1;n<=execfileNum;n++)
 		{
-		t[n] = new Thread(execfile[n]);
-		t[n]->space = new AddrSpace();
-		t[n]->Fork((VoidFunctionPtr) &ForkExecute, (void *)t[n]);
-		cout << "Thread " << execfile[n] << " is executing." << endl;
+			t[n] = new Thread(execfile[n]);
+			t[n]->space = new AddrSpace();
+			t[n]->Fork((VoidFunctionPtr) &ForkExecute, (void *)t[n]);
+			cout << "Thread " << execfile[n] << " is executing." << endl;
 		}
 //	Thread *t1 = new Thread(execfile[1]);
 //	Thread *t1 = new Thread("../test/test1");
