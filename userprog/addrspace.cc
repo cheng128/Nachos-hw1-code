@@ -148,7 +148,7 @@ AddrSpace::Load(char *fileName)
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
 	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
-        
+
         char *buf1;
         buf1 = new char[noffH.code.size];
         // executable->ReadAt(
@@ -303,11 +303,11 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     if (physNum == -1)
     {
         int physNum = FindVictim();
-        evictPage(vpnTable[physNum]);
+        // evictPage(vpnTable[physNum]);
     }
 
     kernel->UsedProcess[physNum] = space;
-    vpnTable[physNum] = vpn;
+    // vpnTable[physNum] = vpn;
 
     return physNum;
 }
@@ -315,13 +315,13 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 int AddrSpace::FindFreePage()
 {
     cout << "in FindFreePage function" << endl;
-    for(unsigned int i=0; i<NumPhysPages; i++)
-    {
-        if(AddrSpace::PhyPageStatus[i]==FALSE)
-            return i;
-        else
-            cout << "No Free Page" << endl;
-    }
+    // for(unsigned int i=0; i<NumPhysPages; i++)
+    // {
+    //     if(AddrSpace::PhyPageStatus[i]==FALSE)
+    //         return i;
+    //     else
+    //         cout << "No Free Page" << endl;
+    // }
     return -1;
 }
 
