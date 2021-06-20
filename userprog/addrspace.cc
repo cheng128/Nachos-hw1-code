@@ -283,7 +283,7 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
-    // cout << "in AllocPage function" << endl;
+    cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
     // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
@@ -337,7 +337,7 @@ int  AddrSpace::loadPage(int vpn)
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
 
-    cout << "loadPage: " << vpn << "a: " << a << endl;
+    cout << "loadPage vpn: " << vpn << "   a: " << a << endl;
     return 0;
 }
 
