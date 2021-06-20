@@ -140,8 +140,8 @@ AddrSpace::Load(char *fileName)
     DEBUG(dbgAddr, "Initializing address space: " << numPages << ", " << size);
     
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
-    if (vm)
-        cout << "Open vm succeed" << endl;
+    // if (vm)
+    //     cout << "Open vm succeed" << endl;
 // then, copy in the code and data segments into memory
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
@@ -149,22 +149,22 @@ AddrSpace::Load(char *fileName)
         char *buf1;
         buf1 = new char[noffH.code.size];
         int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
-        cout << "Load executable: " << a << endl;
+        // cout << "Load executable: " << a << endl;
         int b = vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
-        cout << "after write vm code: " << b << endl;
+        // cout << "after write vm code: " << b << endl;
     }
 
 	if (noffH.initData.size > 0) {
         DEBUG(dbgAddr, "Initializing data segment.");
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
-        cout << "Initializing data segment." << endl;
+        // cout << "Initializing data segment." << endl;
         char *buf2;
         buf2 = new char[noffH.initData.size];
-        cout << "before Read data" << endl;
+        // cout << "before Read data" << endl;
         int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
-        cout << "Load executable init data: " << a << endl;
+        // cout << "Load executable init data: " << a << endl;
         int b = vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
-        cout << "after write vm init: " << b << endl;
+        // cout << "after write vm init: " << b << endl;
     }
 
     delete executable;			// close file
@@ -310,7 +310,7 @@ int AddrSpace::FindFreePage()
         }
         else
         {
-            cout << "No Free Page" << endl;
+            // cout << "No Free Page" << endl;
         }
     }
     return -1;
