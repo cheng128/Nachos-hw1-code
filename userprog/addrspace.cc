@@ -311,7 +311,7 @@ int AddrSpace::FindFreePage()
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
             kernel->machine->PhyPageStatus[i] = TRUE;
-            return i
+            return i;
         }
         else
         {
