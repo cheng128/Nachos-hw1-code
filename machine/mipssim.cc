@@ -52,7 +52,6 @@ void
 Machine::Run()
 {
     Instruction *instr = new Instruction;  // storage for decoded instruction
-	cout << "in machine Run" << endl;
     if (debug->IsEnabled('m')) {
         cout << "Starting program in thread: " << kernel->currentThread->getName();
 	cout << ", at time: " << kernel->stats->totalTicks << "\n";
@@ -121,8 +120,10 @@ Machine::OneInstruction(Instruction *instr)
 				// in the future
 
     // Fetch instruction 
+	cout << "Fetch instruction" << endl;
     if (!ReadMem(registers[PCReg], 4, &raw))
 	return;			// exception occurred
+	cout << "after Fetch instruction" << endl;
     instr->value = raw;
     instr->Decode();
 
