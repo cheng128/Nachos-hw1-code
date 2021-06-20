@@ -149,9 +149,9 @@ AddrSpace::Load(char *fileName)
         char *buf1;
         buf1 = new char[noffH.code.size];
         int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
-        // cout << "Load executable: " << a << endl;
+        cout << "Load executable: " << a << endl;
         int b = vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
-        // cout << "after write vm code: " << b << endl;
+        cout << "after write vm code: " << b << endl;
     }
 
 	if (noffH.initData.size > 0) {
@@ -160,11 +160,11 @@ AddrSpace::Load(char *fileName)
         // cout << "Initializing data segment." << endl;
         char *buf2;
         buf2 = new char[noffH.initData.size];
-        // cout << "before Read data" << endl;
+        cout << "before Read data" << endl;
         int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
-        // cout << "Load executable init data: " << a << endl;
+        cout << "Load executable init data: " << a << endl;
         int b = vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
-        // cout << "after write vm init: " << b << endl;
+        cout << "after write vm init: " << b << endl;
     }
 
     delete executable;			// close file
@@ -263,7 +263,7 @@ void AddrSpace::RestoreState()
 //<HW3
 int AddrSpace::pageFault(int vpn)
 {
-    cout << "in pageFault function: " << vpn << endl;
+    cout << "in pageFault function: vpn = " << vpn << endl;
     kernel->stats->numPageFaults ++;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
     // cout << "pagefault: " << pageTable[vpn].physicalPage << endl;
@@ -283,19 +283,19 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
-    cout << "in AllocPage function" << endl;
+    // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
-    cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
+    // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
     {
         physNum = FindVictim();
-        cout << "Alloc: victim: " << physNum << endl;
+        // cout << "Alloc: victim: " << physNum << endl;
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
 
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
-    cout << "before return " << physNum << endl;
+    cout << "before return physNum: " << physNum << endl;
     return physNum;
 }
 
@@ -327,7 +327,7 @@ int AddrSpace::FindVictim()
 
 int  AddrSpace::loadPage(int vpn)
 {
-    cout << "in loadPage" << endl;
+    // cout << "in loadPage" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
@@ -343,7 +343,7 @@ int  AddrSpace::loadPage(int vpn)
 
 int AddrSpace::evictPage(int vpn)
 {
-    cout << "in evictPage" << endl;
+    // cout << "in evictPage" << endl;
     if(pageTable[vpn].dirty)
     {
         
@@ -360,12 +360,12 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    cout << "in SwapOut function" << endl;
+    // cout << "in SwapOut function" << endl;
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
-    cout << "phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
-    cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
+    // cout << "phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
+    // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
     int a = vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
