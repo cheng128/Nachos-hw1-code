@@ -266,7 +266,7 @@ int AddrSpace::pageFault(int vpn)
     // cout << "in pageFault function" << endl;
     kernel->stats->numPageFaults ++;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    cout << "pagefault: " << pageTable[vpn].physicalPage << endl;
+    cout << "pagefault after AllocPage: " << pageTable[vpn].physicalPage << endl;
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
 	// cout << "from load page back to pagefault" << endl;
@@ -295,7 +295,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
-
+    cout << "before return " << phyNum << endl;
     return physNum;
 }
 
