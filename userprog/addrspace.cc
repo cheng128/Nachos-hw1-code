@@ -138,8 +138,8 @@ AddrSpace::Load(char *fileName)
     }
 
     DEBUG(dbgAddr, "Initializing address space: " << numPages << ", " << size);
-    const char vmfile = "./test/vm";
-    OpenFile *vm = kernel->fileSystem->Open(vmfile);
+    
+    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
 // then, copy in the code and data segments into memory
@@ -325,9 +325,7 @@ int AddrSpace::FindVictim()
 int  AddrSpace::loadPage(int vpn)
 {
     cout << "in loadPage" << endl;
-    const char *filename;
-    filename = "./test/vm";
-    OpenFile *vm = kernel->fileSystem->Open(filename);
+    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
     cout << "vpn: " << vpn << endl;
@@ -356,9 +354,7 @@ int AddrSpace::evictPage(int vpn)
 int AddrSpace::SwapOut(int vpn)
 {
     cout << "in SwapOut function" << endl;
-    const char *filename;
-    filename = "./test/vm";
-    OpenFile *vm = kernel->fileSystem->Open(filename);
+    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     if (vm)
         cout << "Open vm succeed" << endl;
     vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize, pageTable[vpn].virtualPage*PageSize);
