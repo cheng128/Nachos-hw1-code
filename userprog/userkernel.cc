@@ -99,7 +99,7 @@ UserProgKernel::Run()
 			t[n] = new Thread(execfile[n]);
 			t[n]->space = new AddrSpace();
 
-			char vmFileName[strlen(t[n]->getName()))];
+			char vmFileName[strlen(t[n]->getName())];
 			strcpy(vmFileName, t[n]->getName());
 			strcat(vmFileName, "_vm");
 			kernel->fileSystem->Create(vmFileName);
