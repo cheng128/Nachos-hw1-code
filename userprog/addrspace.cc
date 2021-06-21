@@ -118,11 +118,14 @@ AddrSpace::Load(char *fileName)
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
 
-    
-    kernel->fileSystem->Create(strcat(kernel->currentThread->getName(), "_vm"));
-    OpenFile *vm = kernel->fileSystem->Open(strcat(kernel->currentThread->getName(), "_vm"));
+    char vmFileName[strlen(fileName)+3];
+    strcpy(vmFileName, kernel->currentThread->getName());
+    strcat(vmFileName, "_vm")
+
+    kernel->fileSystem->Create(vmFileName);
+    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
     if(!vm)
-        cout << "Open " << strcat(kernel->currentThread->getName(), "_vm") << endl;
+        cout << "Open " << vmFileName << endl;
     size = numPages * PageSize;
 
     // ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
