@@ -168,104 +168,104 @@ Machine::OneInstruction(Instruction *instr)
 			break;
 	
       case OP_ADDIU:
-	registers[instr->rt] = registers[instr->rs] + instr->extra;
-	break;
+		registers[instr->rt] = registers[instr->rs] + instr->extra;
+		break;
 	
       case OP_ADDU:
-	registers[instr->rd] = registers[instr->rs] + registers[instr->rt];
-	break;
+		registers[instr->rd] = registers[instr->rs] + registers[instr->rt];
+		break;
 	
       case OP_AND:
-	registers[instr->rd] = registers[instr->rs] & registers[instr->rt];
-	break;
+		registers[instr->rd] = registers[instr->rs] & registers[instr->rt];
+		break;
 	
       case OP_ANDI:
-	registers[instr->rt] = registers[instr->rs] & (instr->extra & 0xffff);
-	break;
+		registers[instr->rt] = registers[instr->rs] & (instr->extra & 0xffff);
+		break;
 	
       case OP_BEQ:
-	if (registers[instr->rs] == registers[instr->rt])
-	    pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
-	break;
+		if (registers[instr->rs] == registers[instr->rt])
+			pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
+		break;
 	
       case OP_BGEZAL:
-	registers[R31] = registers[NextPCReg] + 4;
+		registers[R31] = registers[NextPCReg] + 4;
       case OP_BGEZ:
-	if (!(registers[instr->rs] & SIGN_BIT))
-	    pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
-	break;
+		if (!(registers[instr->rs] & SIGN_BIT))
+			pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
+		break;
 	
       case OP_BGTZ:
-	if (registers[instr->rs] > 0)
-	    pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
-	break;
+		if (registers[instr->rs] > 0)
+			pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
+		break;
 	
       case OP_BLEZ:
-	if (registers[instr->rs] <= 0)
-	    pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
-	break;
+		if (registers[instr->rs] <= 0)
+			pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
+		break;
 	
       case OP_BLTZAL:
-	registers[R31] = registers[NextPCReg] + 4;
+		registers[R31] = registers[NextPCReg] + 4;
       case OP_BLTZ:
-	if (registers[instr->rs] & SIGN_BIT)
-	    pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
-	break;
+		if (registers[instr->rs] & SIGN_BIT)
+			pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
+		break;
 	
       case OP_BNE:
-	if (registers[instr->rs] != registers[instr->rt])
-	    pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
-	break;
+		if (registers[instr->rs] != registers[instr->rt])
+			pcAfter = registers[NextPCReg] + IndexToAddr(instr->extra);
+		break;
 	
       case OP_DIV:
-	if (registers[instr->rt] == 0) {
-	    registers[LoReg] = 0;
-	    registers[HiReg] = 0;
-	} else {
-	    registers[LoReg] =  registers[instr->rs] / registers[instr->rt];
-	    registers[HiReg] = registers[instr->rs] % registers[instr->rt];
-	}
-	break;
+		if (registers[instr->rt] == 0) {
+			registers[LoReg] = 0;
+			registers[HiReg] = 0;
+		} else {
+			registers[LoReg] =  registers[instr->rs] / registers[instr->rt];
+			registers[HiReg] = registers[instr->rs] % registers[instr->rt];
+		}
+		break;
 	
       case OP_DIVU:	  
-	  rs = (unsigned int) registers[instr->rs];
-	  rt = (unsigned int) registers[instr->rt];
-	  if (rt == 0) {
-	      registers[LoReg] = 0;
-	      registers[HiReg] = 0;
-	  } else {
-	      tmp = rs / rt;
-	      registers[LoReg] = (int) tmp;
-	      tmp = rs % rt;
-	      registers[HiReg] = (int) tmp;
-	  }
-	  break;
+		rs = (unsigned int) registers[instr->rs];
+		rt = (unsigned int) registers[instr->rt];
+		if (rt == 0) {
+			registers[LoReg] = 0;
+			registers[HiReg] = 0;
+		} else {
+			tmp = rs / rt;
+			registers[LoReg] = (int) tmp;
+			tmp = rs % rt;
+			registers[HiReg] = (int) tmp;
+		}
+		break;
 	
       case OP_JAL:
-	registers[R31] = registers[NextPCReg] + 4;
+		registers[R31] = registers[NextPCReg] + 4;
       case OP_J:
-	pcAfter = (pcAfter & 0xf0000000) | IndexToAddr(instr->extra);
-	break;
+		pcAfter = (pcAfter & 0xf0000000) | IndexToAddr(instr->extra);
+		break;
 	
       case OP_JALR:
-	registers[instr->rd] = registers[NextPCReg] + 4;
+		registers[instr->rd] = registers[NextPCReg] + 4;
       case OP_JR:
-	pcAfter = registers[instr->rs];
-	break;
+		pcAfter = registers[instr->rs];
+		break;
 	
       case OP_LB:
       case OP_LBU:
-	tmp = registers[instr->rs] + instr->extra;
-	if (!ReadMem(tmp, 1, &value))
-	    return;
+		tmp = registers[instr->rs] + instr->extra;
+		if (!ReadMem(tmp, 1, &value))
+			return;
 
-	if ((value & 0x80) && (instr->opCode == OP_LB))
-	    value |= 0xffffff00;
-	else
-	    value &= 0xff;
-	nextLoadReg = instr->rt;
-	nextLoadValue = value;
-	break;
+		if ((value & 0x80) && (instr->opCode == OP_LB))
+			value |= 0xffffff00;
+		else
+			value &= 0xff;
+		nextLoadReg = instr->rt;
+		nextLoadValue = value;
+		break;
 	
       case OP_LH:
       case OP_LHU:	  
