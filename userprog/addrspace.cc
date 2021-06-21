@@ -124,8 +124,6 @@ AddrSpace::Load(char *fileName)
 
     kernel->fileSystem->Create(vmFileName);
     OpenFile *vm = kernel->fileSystem->Open(vmFileName);
-    if(!vm)
-        cout << "Open " << vmFileName << endl;
     size = numPages * PageSize;
 
     // ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
@@ -328,7 +326,11 @@ int AddrSpace::FindVictim()
 int  AddrSpace::loadPage(int vpn)
 {
     // cout << "in loadPage" << endl;
-    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
+    char vmFileName[strlen(kernel->currentThread->getName())];
+    strcpy(vmFileName, kernel->currentThread->getName());
+    strcat(vmFileName, "_vm");
+    
+    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
     // if (vm)
     //     cout << "Open vm succeed" << endl;
     // cout << "vpn: " << vpn << endl;
@@ -358,7 +360,11 @@ int AddrSpace::evictPage(int vpn)
 int AddrSpace::SwapOut(int vpn)
 {
     // cout << "in SwapOut function" << endl;
-    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
+    char vmFileName[strlen(kernel->currentThread->getName())];
+    strcpy(vmFileName, kernel->currentThread->getName());
+    strcat(vmFileName, "_vm");
+
+    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
     // if (vm)
     //     cout << "Open vm succeed" << endl;
     // cout << "swap out phy page: " << pageTable[vpn].physicalPage << endl;
