@@ -17,6 +17,7 @@
 #include "filesys.h"
 #include <string.h>
 #include "synch.h"
+#include "machine.h"
 
 #define UserStackSize		1024 	// increase this as necessary!
 
