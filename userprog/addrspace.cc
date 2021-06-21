@@ -118,7 +118,7 @@ AddrSpace::Load(char *fileName)
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
 
-    kernel->fileSystem->Create(strcat(kernel->currentThread->getName(), "_vm"), numPages * PageSize);
+    bool a = kernel->fileSystem->Create(strcat(kernel->currentThread->getName(), "_vm"));
     OpenFile *vm = kernel->fileSystem->Open(strcat(kernel->currentThread->getName(), "_vm"));
     if(vm)
         cout << "Open " << strcat(kernel->currentThread->getName(), "_vm") << endl;
