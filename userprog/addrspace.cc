@@ -362,6 +362,7 @@ int AddrSpace::SwapOut(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
+    cout << "swap out phy page: " << pageTable[vpn].physicalPage<< endl;
     // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "swap out valid: " << pageTable[vpn].valid << endl;
     // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
