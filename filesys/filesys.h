@@ -80,11 +80,11 @@ class FileSystem {
 class FileSystem {
   public:
     FileSystem(bool format=true);		// Initialize the file system.
-					// Must be called *after* "synchDisk" 
-					// has been initialized.
-    					// If "format", there is nothing on
-					// the disk, so initialize the directory
-    					// and the bitmap of free blocks.
+										// Must be called *after* "synchDisk" 
+										// has been initialized.
+										// If "format", there is nothing on
+										// the disk, so initialize the directory
+										// and the bitmap of free blocks.
 
     bool Create(char *name, int initialSize);  	
 					// Create a file (UNIX creat)
