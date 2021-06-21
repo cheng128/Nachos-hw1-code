@@ -154,7 +154,7 @@ AddrSpace::Load(char *fileName)
         buf1 = new char[noffH.code.size];
         int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
         cout << "Load executable: " << a << endl;
-        int b = vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
+        int b = this->vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
         cout << "after write vm code: " << b << endl;
     }
 
