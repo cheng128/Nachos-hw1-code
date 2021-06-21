@@ -21,7 +21,6 @@
 #include "machine.h"
 #include "noff.h"
 
-lock = new Lock("mapLock");
 //----------------------------------------------------------------------
 // SwapHeader
 // 	Do little endian to big endian conversion on the bytes in the 
@@ -286,7 +285,7 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
-    lock->Acquire();
+    
     // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
     // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
@@ -300,7 +299,6 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
     // cout << "before return physNum: " << physNum << endl;
-    lock->Release();
     return physNum;
 }
 
@@ -363,11 +361,12 @@ int AddrSpace::evictPage(int vpn)
 int AddrSpace::SwapOut(int vpn)
 {
     cout << "in SwapOut function" << endl;
-    char vmFileName[strlen(kernel->currentThread->getName())];
-    strcpy(vmFileName, kernel->currentThread->getName());
-    strcat(vmFileName, "_vm");
-    cout << "vmFileName: " <<  vmFileName << endl;
-    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
+    // char vmFileName[strlen(kernel->currentThread->getName())];
+    // strcpy(vmFileName, kernel->currentThread->getName());
+    // strcat(vmFileName, "_vm");
+    // cout << "vmFileName: " <<  vmFileName << endl;
+    // OpenFile *vm = kernel->fileSystem->Open(vmFileName);
+
     if (vm)
         cout << "Open vm succeed" << endl;
     else
@@ -376,7 +375,7 @@ int AddrSpace::SwapOut(int vpn)
     // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "swap out valid: " << pageTable[vpn].valid << endl;
     // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
-    int a = vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
+    int a = kernel->  vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
     cout << "swap out: " << a << endl;
