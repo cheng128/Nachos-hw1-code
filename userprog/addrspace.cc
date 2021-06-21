@@ -144,9 +144,6 @@ AddrSpace::Load(char *fileName)
 
     DEBUG(dbgAddr, "Initializing address space: " << numPages << ", " << size);
     
-    OpenFile *vm = kernel->fileSystem->Open("./test/vm");
-    // if (vm)
-    //     cout << "Open vm succeed" << endl;
 // then, copy in the code and data segments into memory
 	if (noffH.code.size > 0) {
         DEBUG(dbgAddr, "Initializing code segment.");
