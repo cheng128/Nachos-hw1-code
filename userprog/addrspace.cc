@@ -53,6 +53,7 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
+    
 //     for(unsigned int i = 0; i < NumPhysPages; i++)
 //         AddrSpace::PhyPageStatus[i] = FALSE;
 //     AddrSpace::NumFreePhyPages = NumPhysPages;
@@ -116,7 +117,12 @@ AddrSpace::Load(char *fileName)
 			+ UserStackSize;	// we need to increase the size
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
-//	cout << "number of pages of " << fileName<< " is "<<numPages<<endl;
+    
+    cout << kernel->currentThread->getName() << endl;
+    // fileSystem->Create(kernel->currentThread->getName(), numPages * PageSize);
+    // OpenFile *vm = kernel->fileSystem->Open(kernel->currentThread->getName());
+    // if(vm)
+    //     cout << "Open " << kernel->currentThread->getName()
     size = numPages * PageSize;
 
     // ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
