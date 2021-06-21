@@ -109,7 +109,6 @@ ExceptionHandler(ExceptionType which)
 				cerr << "Unexpected system call " << type << "\n";
 				break;
 			}
-			return;
 			break;
 		}
 		case PageFaultException:
@@ -134,12 +133,10 @@ ExceptionHandler(ExceptionType which)
 			cout << "BusErrorException" << endl;
 		}
 		break;
-			//HW3>
-
 		default:
 			cerr << "Unexpected user mode exception" << which << "\n";
 			break;
 	}
-
+	break;
     ASSERTNOTREACHED();
 }
