@@ -53,7 +53,12 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
-    
+    char vmFileName[strlen(kernel->currentThread->getName())];
+    strcpy(vmFileName, kernel->currentThread->getName());
+    strcat(vmFileName, "_vm");
+
+    kernel->fileSystem->Create(vmFileName);
+    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 //     for(unsigned int i = 0; i < NumPhysPages; i++)
 //         AddrSpace::PhyPageStatus[i] = FALSE;
 //     AddrSpace::NumFreePhyPages = NumPhysPages;
@@ -118,12 +123,7 @@ AddrSpace::Load(char *fileName)
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
 
-    char vmFileName[strlen(kernel->currentThread->getName())];
-    strcpy(vmFileName, kernel->currentThread->getName());
-    strcat(vmFileName, "_vm");
-
-    kernel->fileSystem->Create(vmFileName);
-    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
+    
     size = numPages * PageSize;
 
     // ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
@@ -327,11 +327,11 @@ int AddrSpace::FindVictim()
 int  AddrSpace::loadPage(int vpn)
 {
     // cout << "in loadPage" << endl;
-    char vmFileName[strlen(kernel->currentThread->getName())];
-    strcpy(vmFileName, kernel->currentThread->getName());
-    strcat(vmFileName, "_vm");
+    // char vmFileName[strlen(kernel->currentThread->getName())];
+    // strcpy(vmFileName, kernel->currentThread->getName());
+    // strcat(vmFileName, "_vm");
 
-    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
+    // OpenFile *vm = kernel->fileSystem->Open(vmFileName);
     // if (vm)
     //     cout << "Open vm succeed" << endl;
     // cout << "vpn: " << vpn << endl;
@@ -375,7 +375,7 @@ int AddrSpace::SwapOut(int vpn)
     // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "swap out valid: " << pageTable[vpn].valid << endl;
     // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
-    int a = kernel->  vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
+    int a = vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
     cout << "swap out: " << a << endl;

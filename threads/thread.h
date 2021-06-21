@@ -41,11 +41,9 @@
 #include "utility.h"
 #include "sysdep.h"
 
-
 #ifdef USER_PROGRAM
 #include "machine.h"
 #include "addrspace.h"
-#include "filesys.h"
 #endif
 
 // CPU register state to be saved on context switch.  
@@ -108,8 +106,6 @@ class Thread {
     char* getName() { return (name); }
     void Print() { cout << name; }
     void SelfTest();		// test whether thread impl is working
-    OpenFile *vm;
-
 
   private:
     // some of the private data for this class is listed above
@@ -123,7 +119,6 @@ class Thread {
     void StackAllocate(VoidFunctionPtr func, void *arg);
     				// Allocate a stack for thread.
 				// Used internally by Fork()
-
 
 #ifdef USER_PROGRAM
 // A thread running a user program actually has *two* sets of CPU registers -- 

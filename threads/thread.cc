@@ -21,7 +21,6 @@
 #include "switch.h"
 #include "synch.h"
 #include "sysdep.h"
-#include "filesys.h"
 
 // this is put at the top of the execution stack, for detecting stack overflows
 const int STACK_FENCEPOST = 0xdedbeef;
@@ -47,12 +46,6 @@ Thread::Thread(char* threadName)
     }
 #ifdef USER_PROGRAM
     space = NULL;
-    char vmFileName[strlen(threadName)];
-    strcpy(vmFileName, threadName);
-    strcat(vmFileName, "_vm");
-
-    kernel->fileSystem->Create(vmFileName);
-    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 #endif
 }
 
