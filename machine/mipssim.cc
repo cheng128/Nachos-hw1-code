@@ -121,18 +121,19 @@ Machine::OneInstruction(Instruction *instr)
 
     // Fetch instruction 
     if (!ReadMem(registers[PCReg], 4, &raw))
+		cout << "Fetch instruction" << endl;
 	return;			// exception occurred
     instr->value = raw;
     instr->Decode();
 
     if (debug->IsEnabled('m')) {
         struct OpString *str = &opStrings[instr->opCode];
-	char buf[80];
+		char buf[80];
 
         ASSERT(instr->opCode <= MaxOpcode);
         cout << "At PC = " << registers[PCReg];
-	sprintf(buf, str->format, TypeToReg(str->args[0], instr),
-	     TypeToReg(str->args[1], instr), TypeToReg(str->args[2], instr));
+		sprintf(buf, str->format, TypeToReg(str->args[0], instr),
+	    TypeToReg(str->args[1], instr), TypeToReg(str->args[2], instr));
         cout << "\t" << buf << "\n";
     }
     
@@ -145,24 +146,26 @@ Machine::OneInstruction(Instruction *instr)
     switch (instr->opCode) {
 	
       case OP_ADD:
-	sum = registers[instr->rs] + registers[instr->rt];
-	if (!((registers[instr->rs] ^ registers[instr->rt]) & SIGN_BIT) &&
-	    ((registers[instr->rs] ^ sum) & SIGN_BIT)) {
-	    RaiseException(OverflowException, 0);
-	    return;
-	}
-	registers[instr->rd] = sum;
-	break;
+		sum = registers[instr->rs] + registers[instr->rt];
+		if (!((registers[instr->rs] ^ registers[instr->rt]) & SIGN_BIT) &&
+			((registers[instr->rs] ^ sum) & SIGN_BIT)) 
+			{
+				RaiseException(OverflowException, 0);
+				return;
+			}
+			registers[instr->rd] = sum;
+			break;
 	
       case OP_ADDI:
-	sum = registers[instr->rs] + instr->extra;
-	if (!((registers[instr->rs] ^ instr->extra) & SIGN_BIT) &&
-	    ((instr->extra ^ sum) & SIGN_BIT)) {
-	    RaiseException(OverflowException, 0);
-	    return;
-	}
-	registers[instr->rt] = sum;
-	break;
+		sum = registers[instr->rs] + instr->extra;
+		if (!((registers[instr->rs] ^ instr->extra) & SIGN_BIT) &&
+			((instr->extra ^ sum) & SIGN_BIT)) 
+			{
+			RaiseException(OverflowException, 0);
+			return;
+			}
+			registers[instr->rt] = sum;
+			break;
 	
       case OP_ADDIU:
 	registers[instr->rt] = registers[instr->rs] + instr->extra;
