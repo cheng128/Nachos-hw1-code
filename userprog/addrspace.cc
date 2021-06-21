@@ -21,13 +21,6 @@
 #include "machine.h"
 #include "noff.h"
 
-
-char vmFileName[strlen(kernel->currentThread->getName())];
-strcpy(vmFileName, kernel->currentThread->getName());
-strcat(vmFileName, "_vm");
-
-kernel->fileSystem->Create(vmFileName);
-OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 //----------------------------------------------------------------------
 // SwapHeader
 // 	Do little endian to big endian conversion on the bytes in the 
@@ -60,7 +53,12 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
-    
+    char vmFileName[strlen(kernel->currentThread->getName())];
+    strcpy(vmFileName, kernel->currentThread->getName());
+    strcat(vmFileName, "_vm");
+
+    kernel->fileSystem->Create(vmFileName);
+    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 //     for(unsigned int i = 0; i < NumPhysPages; i++)
 //         AddrSpace::PhyPageStatus[i] = FALSE;
 //     AddrSpace::NumFreePhyPages = NumPhysPages;
@@ -168,7 +166,7 @@ AddrSpace::Load(char *fileName)
         buf2 = new char[noffH.initData.size];
         int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "Load executable init data: " << a << endl;
-        int b = vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
+        int b = this->vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
         cout << "after write vm init: " << b << endl;
     }
 
@@ -338,7 +336,7 @@ int  AddrSpace::loadPage(int vpn)
     //     cout << "Open vm succeed" << endl;
     // cout << "vpn: " << vpn << endl;
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
-    int a = vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
+    int a = this->vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
 
@@ -369,7 +367,7 @@ int AddrSpace::SwapOut(int vpn)
     // cout << "vmFileName: " <<  vmFileName << endl;
     // OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 
-    if (vm)
+    if (this->vm)
         cout << "Open vm succeed" << endl;
     else
         cout << "Failed to open vm file" << endl;
@@ -377,7 +375,7 @@ int AddrSpace::SwapOut(int vpn)
     // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "swap out valid: " << pageTable[vpn].valid << endl;
     // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
-    int a = vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
+    int a = this->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
     cout << "swap out: " << a << endl;
