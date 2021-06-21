@@ -53,12 +53,6 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
-    char vmFileName[strlen(kernel->currentThread->getName())];
-    strcpy(vmFileName, kernel->currentThread->getName());
-    strcat(vmFileName, "_vm");
-
-    kernel->fileSystem->Create(vmFileName);
-    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 //     for(unsigned int i = 0; i < NumPhysPages; i++)
 //         AddrSpace::PhyPageStatus[i] = FALSE;
 //     AddrSpace::NumFreePhyPages = NumPhysPages;
@@ -369,7 +363,7 @@ int AddrSpace::SwapOut(int vpn)
     // cout << "vmFileName: " <<  vmFileName << endl;
     // OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 
-    if (this->vm)
+    if (kernel->currentThread->space->vm)
         cout << "Open vm succeed" << endl;
     else
         cout << "Failed to open vm file" << endl;

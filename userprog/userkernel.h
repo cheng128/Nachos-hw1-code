@@ -33,6 +33,7 @@ class UserProgKernel : public ThreadedKernel {
 // These are public for notational convenience.
     Machine *machine;
     FileSystem *fileSystem;
+    OpenFile *vm;
 
 #ifdef FILESYS
     SynchDisk *synchDisk;

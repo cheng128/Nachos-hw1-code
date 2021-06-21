@@ -10,6 +10,7 @@
 #include "synchconsole.h"
 #include "userkernel.h"
 #include "synchdisk.h"
+#include "filesys.h"
 
 //----------------------------------------------------------------------
 // UserProgKernel::UserProgKernel
@@ -97,6 +98,14 @@ UserProgKernel::Run()
 		{
 			t[n] = new Thread(execfile[n]);
 			t[n]->space = new AddrSpace();
+
+			char vmFileName[strlen(t[n]->getName()))];
+			strcpy(vmFileName, t[n]->getName());
+			strcat(vmFileName, "_vm");
+			kernel->fileSystem->Create(vmFileName);
+			OpenFile *vm = kernel->fileSystem->Open(vmFileName);
+
+			t[n]->space->vm = 
 			t[n]->Fork((VoidFunctionPtr) &ForkExecute, (void *)t[n]);
 			cout << "Thread " << execfile[n] << " is executing." << endl;
 		}
