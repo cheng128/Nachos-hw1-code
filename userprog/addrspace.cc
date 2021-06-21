@@ -21,6 +21,7 @@
 #include "machine.h"
 #include "noff.h"
 
+
 //----------------------------------------------------------------------
 // SwapHeader
 // 	Do little endian to big endian conversion on the bytes in the 
@@ -284,7 +285,8 @@ int AddrSpace::pageFault(int vpn)
 
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
-{
+{   
+    lock->Acquire();
     // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
     // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
@@ -298,6 +300,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
     // cout << "before return physNum: " << physNum << endl;
+    lock->Release();
     return physNum;
 }
 

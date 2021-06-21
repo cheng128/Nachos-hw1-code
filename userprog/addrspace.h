@@ -16,6 +16,7 @@
 #include "copyright.h"
 #include "filesys.h"
 #include <string.h>
+#include "synch.h"
 
 #define UserStackSize		1024 	// increase this as necessary!
 
@@ -41,6 +42,7 @@ class AddrSpace {
     //HW3>
 
   private:
+    Lock* lock;
     TranslationEntry *pageTable;	// Assume linear page table translation
 					// for now!
     unsigned int numPages;		// Number of pages in the virtual 
