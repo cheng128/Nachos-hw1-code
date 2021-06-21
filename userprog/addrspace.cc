@@ -304,13 +304,9 @@ int AddrSpace::FindFreePage()
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
+            cout << "find Free Page" << endl;
             kernel->machine->PhyPageStatus[i] = TRUE;
             return i;
-            break;
-        }
-        else
-        {
-            // cout << "No Free Page" << endl;
         }
     }
     return -1;
@@ -319,8 +315,8 @@ int AddrSpace::FindFreePage()
 int AddrSpace::FindVictim()
 {
     // cout << "in FindVictim function" << endl;
-
-    return (unsigned int)rand()%32;
+    unsigned int ppn = Rand() % NumPhysPages;
+    return ppn;
 }
 
 int  AddrSpace::loadPage(int vpn)
@@ -362,7 +358,7 @@ int AddrSpace::SwapOut(int vpn)
     OpenFile *vm = kernel->fileSystem->Open("./test/vm");
     // if (vm)
     //     cout << "Open vm succeed" << endl;
-    cout << "swap out phy page: " << pageTable[vpn].physicalPage<< endl;
+    // cout << "swap out phy page: " << pageTable[vpn].physicalPage << endl;
     // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "swap out valid: " << pageTable[vpn].valid << endl;
     // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
