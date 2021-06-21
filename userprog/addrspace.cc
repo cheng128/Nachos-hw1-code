@@ -356,7 +356,7 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    cout << "in SwapOut function" << endl;
+    // cout << "in SwapOut function" << endl;
     // char vmFileName[strlen(kernel->currentThread->getName())];
     // strcpy(vmFileName, kernel->currentThread->getName());
     // strcat(vmFileName, "_vm");
