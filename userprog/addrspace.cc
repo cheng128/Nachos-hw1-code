@@ -21,6 +21,13 @@
 #include "machine.h"
 #include "noff.h"
 
+
+char vmFileName[strlen(kernel->currentThread->getName())];
+strcpy(vmFileName, kernel->currentThread->getName());
+strcat(vmFileName, "_vm");
+
+kernel->fileSystem->Create(vmFileName);
+OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 //----------------------------------------------------------------------
 // SwapHeader
 // 	Do little endian to big endian conversion on the bytes in the 
@@ -53,12 +60,7 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
-    char vmFileName[strlen(kernel->currentThread->getName())];
-    strcpy(vmFileName, kernel->currentThread->getName());
-    strcat(vmFileName, "_vm");
-
-    kernel->fileSystem->Create(vmFileName);
-    OpenFile *vm = kernel->fileSystem->Open(vmFileName);
+    
 //     for(unsigned int i = 0; i < NumPhysPages; i++)
 //         AddrSpace::PhyPageStatus[i] = FALSE;
 //     AddrSpace::NumFreePhyPages = NumPhysPages;
