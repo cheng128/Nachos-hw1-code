@@ -147,11 +147,11 @@ AddrSpace::Load(char *fileName)
         char *buf1;
         buf1 = new char[noffH.code.size];
         int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
-        cout << "Load executable: " << a << endl;
-        if (kernel->currentThread->space->vm)
-            cout << "vm succeed" << endl;
+        // cout << "Load executable: " << a << endl;
+        // if (kernel->currentThread->space->vm)
+        //     cout << "vm succeed" << endl;
         int b = kernel->currentThread->space->vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
-        cout << "after write vm code: " << b << endl;
+        // cout << "after write vm code: " << b << endl;
     }
 
 	if (noffH.initData.size > 0) {
@@ -161,9 +161,9 @@ AddrSpace::Load(char *fileName)
         char *buf2;
         buf2 = new char[noffH.initData.size];
         int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
-        cout << "Load executable init data: " << a << endl;
+        // cout << "Load executable init data: " << a << endl;
         int b = kernel->currentThread->space->vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
-        cout << "after write vm init: " << b << endl;
+        // cout << "after write vm init: " << b << endl;
     }
 
     delete executable;			// close file
@@ -288,7 +288,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     if (physNum == -1)
     {
         physNum = FindVictim();
-        cout << "Alloc: victim: " << physNum << endl;
+        // cout << "Alloc: victim: " << physNum << endl;
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
 
@@ -305,7 +305,7 @@ int AddrSpace::FindFreePage()
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
-            cout << "find Free Page" << endl;
+            // cout << "find Free Page" << endl;
             kernel->machine->PhyPageStatus[i] = TRUE;
             return i;
         }
@@ -363,10 +363,10 @@ int AddrSpace::SwapOut(int vpn)
     // cout << "vmFileName: " <<  vmFileName << endl;
     // OpenFile *vm = kernel->fileSystem->Open(vmFileName);
 
-    if (kernel->currentThread->space->vm)
-        cout << "Open vm succeed" << endl;
-    else
-        cout << "Failed to open vm file" << endl;
+    // if (kernel->currentThread->space->vm)
+    //     cout << "Open vm succeed" << endl;
+    // else
+    //     cout << "Failed to open vm file" << endl;
     // cout << "swap out phy page: " << pageTable[vpn].physicalPage << endl;
     // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "swap out valid: " << pageTable[vpn].valid << endl;
@@ -374,7 +374,7 @@ int AddrSpace::SwapOut(int vpn)
     int a = kernel->currentThread->space->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
-    cout << "swap out: " << a << endl;
+    // cout << "swap out: " << a << endl;
     return 0;
 }  
 //HW3>
