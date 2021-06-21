@@ -80,7 +80,7 @@ AddrSpace::AddrSpace()
 
 AddrSpace::~AddrSpace()
 {
-
+    kernel->fileSystem->Remove(strcat(kernel->currentThread->getName(), "_vm"));
     delete pageTable;
 }
 
@@ -117,12 +117,11 @@ AddrSpace::Load(char *fileName)
 			+ UserStackSize;	// we need to increase the size
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
-    
-    cout << kernel->currentThread->getName() << endl;
-    // fileSystem->Create(kernel->currentThread->getName(), numPages * PageSize);
-    // OpenFile *vm = kernel->fileSystem->Open(kernel->currentThread->getName());
-    // if(vm)
-    //     cout << "Open " << kernel->currentThread->getName()
+
+    kernel->fileSystem->Create(strcat(kernel->currentThread->getName(), "_vm"), numPages * PageSize);
+    OpenFile *vm = kernel->fileSystem->Open(strcat(kernel->currentThread->getName(), "_vm"));
+    if(vm)
+        cout << "Open " << strcat(kernel->currentThread->getName(), "_vm") << endl;
     size = numPages * PageSize;
 
     // ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
