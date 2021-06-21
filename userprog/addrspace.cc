@@ -118,7 +118,7 @@ AddrSpace::Load(char *fileName)
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
 
-    char vmFileName[strlen(fileName)+3];
+    char vmFileName[strlen(kernel->currentThread->getName())];
     strcpy(vmFileName, kernel->currentThread->getName());
     strcat(vmFileName, "_vm")
 
