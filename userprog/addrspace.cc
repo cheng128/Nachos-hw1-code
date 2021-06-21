@@ -120,7 +120,7 @@ AddrSpace::Load(char *fileName)
 
     char vmFileName[strlen(kernel->currentThread->getName())];
     strcpy(vmFileName, kernel->currentThread->getName());
-    strcat(vmFileName, "_vm")
+    strcat(vmFileName, "_vm");
 
     kernel->fileSystem->Create(vmFileName);
     OpenFile *vm = kernel->fileSystem->Open(vmFileName);
