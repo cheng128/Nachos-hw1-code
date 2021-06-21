@@ -97,7 +97,6 @@ Machine::ReadMem(int addr, int size, int *value)
     exception = Translate(addr, &physicalAddress, size, FALSE);
     if (exception != NoException) {
 		RaiseException(exception, addr);
-		cout << "back to ReadMem" << endl;
 		return FALSE;
     }
     switch (size) {
@@ -198,6 +197,7 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 // check for alignment errors
     if (((size == 4) && (virtAddr & 0x3)) || ((size == 2) && (virtAddr & 0x1))){
 	DEBUG(dbgAddr, "Alignment problem at " << virtAddr << ", size " << size);
+	cout << "Alignment problem" << endl;
 	return AddressErrorException;
     }
     
@@ -212,7 +212,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     
     if (tlb == NULL) {		// => page table => vpn is index into table
 	if (vpn >= pageTableSize) {
-		cout << vpn << endl;
 	    DEBUG(dbgAddr, "Illegal virtual page # " << virtAddr);
 	    return AddressErrorException;
 	} else if (!pageTable[vpn].valid) {
