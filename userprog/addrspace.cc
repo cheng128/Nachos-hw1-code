@@ -283,7 +283,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {
     // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
-    // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
+    cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
     {
         physNum = FindVictim();
