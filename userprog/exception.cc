@@ -120,7 +120,7 @@ ExceptionHandler(ExceptionType which)
 		
 		case AddressErrorException:
 		{
-			cout << "Address Error Exception" << endl;	
+			// cout << "Address Error Exception" << endl;	
 			
 		}
 		break;	

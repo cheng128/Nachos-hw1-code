@@ -114,9 +114,11 @@ AddrSpace::Load(char *fileName)
 // how big is address space?
     size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
 			+ UserStackSize;	// we need to increase the size
-						// to leave room for the stack
+						        // to leave room for the stack
     numPages = divRoundUp(size, PageSize);
-
+    cout << "noffH.code.size: " << noffH.code.size << endl;
+    cout << "noffH.initData.size: " << noffH.initData.size << endl;
+    cout << "noffH.uninitData.size: " << noffH.uninitData.size << endl;
     
     size = numPages * PageSize;
 
