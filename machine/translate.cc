@@ -197,7 +197,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 // check for alignment errors
     if (((size == 4) && (virtAddr & 0x3)) || ((size == 2) && (virtAddr & 0x1))){
 	DEBUG(dbgAddr, "Alignment problem at " << virtAddr << ", size " << size);
-	cout << "Alignment problem" << endl;
 	return AddressErrorException;
     }
     
@@ -211,9 +210,10 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     offset = (unsigned) virtAddr % PageSize;
     
     if (tlb == NULL) {		// => page table => vpn is index into table
-	if (vpn >= pageTableSize) {
-	    DEBUG(dbgAddr, "Illegal virtual page # " << virtAddr);
-	    return AddressErrorException;
+		if (vpn >= pageTableSize) {
+			cout << "vpn: " << vpn << "virAddr: " << virtAddr << endl; 
+			DEBUG(dbgAddr, "Illegal virtual page # " << virtAddr);
+			return AddressErrorException;
 	} else if (!pageTable[vpn].valid) {
 	    DEBUG(dbgAddr, "Invalid virtual page # " << virtAddr);
 		if (memoryPagingLock == NULL)
