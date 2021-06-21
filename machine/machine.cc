@@ -60,7 +60,7 @@ Machine::Machine(bool debug)
 
     for (i = 0; i < NumTotalRegs; i++)
         registers[i] = 0;
-    mainMemory = new char[MemorySize];
+        mainMemory = new char[MemorySize];
     for (i = 0; i < MemorySize; i++)
       	mainMemory[i] = 0;
 #ifdef USE_TLB

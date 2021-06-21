@@ -160,7 +160,6 @@ AddrSpace::Load(char *fileName)
         // cout << "Initializing data segment." << endl;
         char *buf2;
         buf2 = new char[noffH.initData.size];
-        cout << "before Read data" << endl;
         int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         cout << "Load executable init data: " << a << endl;
         int b = vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
@@ -183,7 +182,6 @@ void
 AddrSpace::Execute(char *fileName) 
 {
     if (!Load(fileName)) {
-	cout << "inside !Load(FileName)" << endl;
 	return;				// executable not found
     }
 
