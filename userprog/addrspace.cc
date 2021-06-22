@@ -116,6 +116,8 @@ AddrSpace::Load(char *fileName)
 			+ UserStackSize;	// we need to increase the size
 	// 					        // to leave room for the stack
     // size = 16384;
+    cout << fileName << endl;
+    cout << "noffH.code.size + noffH.initData.size: "<< endl;
     numPages = divRoundUp(size, PageSize);
     
     
