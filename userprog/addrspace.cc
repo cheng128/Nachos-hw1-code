@@ -262,7 +262,7 @@ int AddrSpace::pageFault(int vpn)
     // cout << "in pageFault function: vpn = " << vpn << endl;
     kernel->stats->numPageFaults ++;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    // cout << "pagefault: " << pageTable[vpn].physicalPage << endl;
+    cout << "find physicalpage: " << pageTable[vpn].physicalPage << endl;
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
 	// cout << "from load page back to pagefault" << endl;
