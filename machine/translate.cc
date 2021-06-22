@@ -210,21 +210,16 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     if (tlb == NULL) {		// => page table => vpn is index into table
 	if (vpn >= pageTableSize) {
 	    DEBUG(dbgAddr, "Illegal virtual page # " << virtAddr);
-		cout << "Illegal virtAddr: " << virtAddr << endl;
 	    return AddressErrorException;
 	} else if (!pageTable[vpn].valid) {
 	    DEBUG(dbgAddr, "Invalid virtual page # " << virtAddr);
 		if (memoryPagingLock == NULL)
 			memoryPagingLock = new Lock("memoryPagingLock");
-		// cout << "VirtualAdd: " << vpn << endl;
-		// cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
-		// cout << "currentThread->space: " << kernel->currentThread->space << endl;
+
 		memoryPagingLock->Acquire();
-		//cout << "virtAddr: " << virtAddr << endl;
 		kernel->currentThread->space->pageFault(vpn);
 		memoryPagingLock->Release();
-		// cout << "return Exception" << endl;
-	    // return PageFaultException;
+
 	}
 	entry = &pageTable[vpn];
     } else {

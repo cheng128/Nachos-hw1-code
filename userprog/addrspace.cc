@@ -259,21 +259,16 @@ void AddrSpace::RestoreState()
 //<HW3
 int AddrSpace::pageFault(int vpn)
 {
-    // cout << "in pageFault function: vpn = " << vpn << endl;
+
     kernel->stats->numPageFaults ++;
-    cout << "in pageFault before into AllocPage" << endl;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    cout << "in pageFatulte after AllocPage find physicalpage: " << pageTable[vpn].physicalPage << endl;
     
-    // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
-	// cout << "from load page back to pagefault" << endl;
-    // cout << "vpn: " << vpn << " pageTable[vpn].virtualPage: " << pageTable[vpn].virtualPage << endl;
+
 	pageTable[vpn].valid = TRUE;
 	pageTable[vpn].use = FALSE;
 	pageTable[vpn].dirty = FALSE;
 	pageTable[vpn].readOnly = FALSE;
-	// cout << "end of pagefault" << endl;
 
 	return 0;
 }
@@ -281,35 +276,37 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
-    cout << "in AllocPage" << endl;
     kernel->lock->Acquire();
+
+    for(unsigned int i=0; i<NumPhysPages; i++)
+    {
+        cout << "Before UsedProcess[physNum]: " << kernel->UsedProcess[i] << endl;
+    }
+
     int physNum = FindFreePage();
-    // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
     {
         physNum = FindVictim();
-        cout << "Alloc: victim: " << physNum << endl;
-        cout << "current Thread: " << kernel->currentThread->getName() << endl;
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
+    cout << "space: " << space << endl;
+    cout << "physNum: " << physNum << endl;
+
+    cout << "After UsedProcess[physNum]: " << kernel->UsedProcess[physNum] << endl;
+
 
     kernel->UsedProcess[physNum] = space;
-    // cout << "in Alloc Page new kernel->UsedProcess[physNum]: " <<  kernel->UsedProcess[physNum] << endl;
-    // cout << "current thread: " << kernel->currentThread->getName() << endl;
     kernel->invertTable[physNum] = vpn;
-    // cout << "before return physNum: " << physNum << endl;
     kernel->lock->Release();
     return physNum;
 }
 
 int AddrSpace::FindFreePage()
 {
-    // cout << "in FindFreePage function" << endl;
     for(unsigned int i=0; i<NumPhysPages; i++)
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
-            cout << "find Free Page: " << i << endl;
             kernel->machine->PhyPageStatus[i] = TRUE;
             return i;
         }
@@ -319,30 +316,22 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
-    // cout << "in FindVictim function" << endl;
     unsigned int ppn = rand() % NumPhysPages;
-    // cout << "Find victim: " << kernel->UsedProcess[ppn] << endl;
     return ppn;
 }
 
 int  AddrSpace::loadPage(int vpn)
 {
-    // cout << "in loadPage" << endl;
-    // cout << "vpn: " << vpn << endl;
-    // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
+
     bzero(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize);
     int a = kernel->currentThread->space->vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                                                     PageSize,
                                                     pageTable[vpn].virtualPage * PageSize);
-
-    // cout << "loadPage phy address: " << pageTable[vpn].physicalPage * PageSize << "   a: " << a << endl;
     return 0;
 }
 
 int AddrSpace::evictPage(int vpn)
 {
-    cout << "in evictPage" << endl;
-    cout << "evict Thread: " << kernel->currentThread->getName() << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
@@ -358,15 +347,9 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    // cout << "in SwapOut function" << endl;
-    // cout << "swap out phy page: " << pageTable[vpn].physicalPage << endl;
-    // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
-    // cout << "swap out valid: " << pageTable[vpn].valid << endl;
-    // cout << "pageTable[vpn].virtualPage * PageSize: " << pageTable[vpn].virtualPage * PageSize << endl;
     int a = kernel->currentThread->space->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                                                         PageSize,
                                                         pageTable[vpn].virtualPage * PageSize);
-    // cout << "swap out: " << a << endl;
     return 0;
 }  
 //HW3>
