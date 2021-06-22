@@ -17,7 +17,7 @@
 #include "filesys.h"
 #include <string.h>
 
-#define UserStackSize		1024 	// increase this as necessary!
+#define UserStackSize		2048 	// increase this as necessary!
 
 class AddrSpace {
   public:
@@ -29,7 +29,7 @@ class AddrSpace {
 
     void SaveState();			// Save/restore address space-specific
     void RestoreState();		// info on a context switch 
-    
+
     //<HW3
     int pageFault(int vpn);
     int AllocPage(AddrSpace* space, int vpn);
