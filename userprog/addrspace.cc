@@ -280,7 +280,7 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
-    kernel->machine->lock->Acquire();
+    
     // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
     // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
@@ -293,7 +293,6 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
-    kernel->machine->lock->Release();
     // cout << "before return physNum: " << physNum << endl;
     return physNum;
 }
