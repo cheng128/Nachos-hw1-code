@@ -307,7 +307,7 @@ int AddrSpace::FindFreePage()
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
-            // cout << "find Free Page" << endl;
+            cout << "find Free Page" << endl;
             kernel->machine->PhyPageStatus[i] = TRUE;
             return i;
         }
