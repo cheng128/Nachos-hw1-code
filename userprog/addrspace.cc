@@ -280,7 +280,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 
     for(unsigned int i=0; i<NumPhysPages; i++)
     {
-        cout << "Before UsedProcess[physNum]: " << kernel->UsedProcess[i] << endl;
+        cout << "Before UsedProcess[" << i << "]: " << kernel->UsedProcess[i] << endl;
     }
 
     int physNum = FindFreePage();
