@@ -104,6 +104,7 @@ UserProgKernel::Run()
 			strcat(vmFileName, "_vm");
 			kernel->fileSystem->Create(vmFileName);
 			t[n]->space->vm = kernel->fileSystem->Open(vmFileName);
+			
 			t[n]->Fork((VoidFunctionPtr) &ForkExecute, (void *)t[n]);
 			cout << "Thread " << execfile[n] << " is executing." << endl;
 		}

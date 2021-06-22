@@ -151,20 +151,20 @@ Machine::WriteMem(int addr, int size, int value)
     }
     switch (size) {
       case 1:
-	mainMemory[physicalAddress] = (unsigned char) (value & 0xff);
-	break;
+		mainMemory[physicalAddress] = (unsigned char) (value & 0xff);
+		break;
 
       case 2:
-	*(unsigned short *) &mainMemory[physicalAddress]
-		= ShortToMachine((unsigned short) (value & 0xffff));
+		*(unsigned short *) &mainMemory[physicalAddress]
+			= ShortToMachine((unsigned short) (value & 0xffff));
 	break;
       
       case 4:
-	*(unsigned int *) &mainMemory[physicalAddress]
-		= WordToMachine((unsigned int) value);
+		*(unsigned int *) &mainMemory[physicalAddress]
+			= WordToMachine((unsigned int) value);
 	break;
 	
-      default: ASSERT(FALSE);
+      default:ASSERT(FALSE);
     }
     
     return TRUE;
@@ -257,6 +257,9 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     if (writing)
 	entry->dirty = TRUE;
     *physAddr = pageFrame * PageSize + offset;
+	cout << "phys addr = " << *physAddr << endl;
+	cout << "thread = " << kernel->currentThread->getName()<< endl;
+	cout << "Used Process " << kernel->invertTable[physNum] << endl;
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG(dbgAddr, "phys addr = " << *physAddr);
     return NoException;
