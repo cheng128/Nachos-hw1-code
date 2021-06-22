@@ -261,8 +261,9 @@ int AddrSpace::pageFault(int vpn)
 {
     // cout << "in pageFault function: vpn = " << vpn << endl;
     kernel->stats->numPageFaults ++;
+    cout << "in pageFault before into AllocPage" << endl;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    cout << "find physicalpage: " << pageTable[vpn].physicalPage << endl;
+    cout << "in pageFatulte after AllocPage find physicalpage: " << pageTable[vpn].physicalPage << endl;
     
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
@@ -281,7 +282,7 @@ int AddrSpace::pageFault(int vpn)
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
     kernel->lock->Acquire();
-    // cout << "in AllocPage function" << endl;
+    cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
     cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
