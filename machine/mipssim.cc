@@ -50,7 +50,8 @@ class Instruction {
 
 void
 Machine::Run()
-{
+{	
+	cout << kernel->currentThread->getName() << " in machine run" << endl;
     Instruction *instr = new Instruction;  // storage for decoded instruction
     if (debug->IsEnabled('m')) {
         cout << "Starting program in thread: " << kernel->currentThread->getName();
@@ -114,7 +115,6 @@ TypeToReg(RegType reg, Instruction *instr)
 void
 Machine::OneInstruction(Instruction *instr)
 {	
-		// cout << kernel->currentThread->getName() << " in OneInstruction" << endl;
     int raw;
     int nextLoadReg = 0; 	
     int nextLoadValue = 0; 	// record delayed load operation, to apply
