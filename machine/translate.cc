@@ -209,6 +209,13 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     vpn = (unsigned) virtAddr / PageSize;
     offset = (unsigned) virtAddr % PageSize;
     
+	for(unsigned int i=0; i<pageTableSize/128; i++)
+	{
+		cout << "page entry: " << i << endl;
+		cout << "physical page: " << pageTable[i] << endl;
+		cout << "valid? " << pageTable[i].valid << endl;
+	}
+
     if (tlb == NULL) {		// => page table => vpn is index into table
 	if (vpn >= pageTableSize) {
 	    DEBUG(dbgAddr, "Illegal virtual page # " << virtAddr);
@@ -257,9 +264,9 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     if (writing)
 	entry->dirty = TRUE;
     *physAddr = pageFrame * PageSize + offset;
-	cout << "phys addr = " << *physAddr << endl;
-	cout << "thread = " << kernel->currentThread->getName()<< endl;
-	cout << "Used Process " << kernel->invertTable[pageFrame] << endl;
+	// cout << "phys addr = " << *physAddr << endl;
+	// cout << "thread = " << kernel->currentThread->getName()<< endl;
+	// cout << "Used Process " << kernel->invertTable[pageFrame] << endl;
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG(dbgAddr, "phys addr = " << *physAddr);
     return NoException;
