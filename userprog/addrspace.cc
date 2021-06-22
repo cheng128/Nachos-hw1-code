@@ -308,7 +308,7 @@ int AddrSpace::FindFreePage()
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
-            // cout << "find Free Page" << endl;
+            cout << "find Free Page: " << i << endl;
             kernel->machine->PhyPageStatus[i] = TRUE;
             return i;
         }
@@ -320,7 +320,7 @@ int AddrSpace::FindVictim()
 {
     // cout << "in FindVictim function" << endl;
     unsigned int ppn = rand() % NumPhysPages;
-    // cout << "victim: " << kernel->UsedProcess[ppn] << endl;
+    cout << "Find victim: " << kernel->UsedProcess[ppn] << endl;
     return ppn;
 }
 
