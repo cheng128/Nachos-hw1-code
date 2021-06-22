@@ -17,6 +17,8 @@
 #include "machine.h"
 #include "synchdisk.h"
 
+#include "synch.h"
+
 class SynchDisk;
 class UserProgKernel : public ThreadedKernel {
   public:
@@ -41,6 +43,7 @@ class UserProgKernel : public ThreadedKernel {
   //<HW3
   AddrSpace *UsedProcess[NumPhysPages];
   unsigned int invertTable[NumPhysPages];
+  Lock* lock;
   //HW3>
 
   private:
