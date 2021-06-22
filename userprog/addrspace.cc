@@ -288,7 +288,8 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     if (physNum == -1)
     {
         physNum = FindVictim();
-        // cout << "Alloc: victim: " << physNum << endl;
+        cout << "Alloc: victim: " << physNum << endl;
+        cout << "current Thread: " << kernel->currentThread->getName() << endl;
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
 
@@ -320,20 +321,13 @@ int AddrSpace::FindVictim()
 {
     // cout << "in FindVictim function" << endl;
     unsigned int ppn = rand() % NumPhysPages;
-    cout << "Find victim: " << kernel->UsedProcess[ppn] << endl;
+    // cout << "Find victim: " << kernel->UsedProcess[ppn] << endl;
     return ppn;
 }
 
 int  AddrSpace::loadPage(int vpn)
 {
     // cout << "in loadPage" << endl;
-    // char vmFileName[strlen(kernel->currentThread->getName())];
-    // strcpy(vmFileName, kernel->currentThread->getName());
-    // strcat(vmFileName, "_vm");
-
-    // OpenFile *vm = kernel->fileSystem->Open(vmFileName);
-    // if (vm)
-    //     cout << "Open vm succeed" << endl;
     // cout << "vpn: " << vpn << endl;
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     bzero(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize);
@@ -347,8 +341,8 @@ int  AddrSpace::loadPage(int vpn)
 
 int AddrSpace::evictPage(int vpn)
 {
-    // cout << "in evictPage" << endl;
-    // cout << "evict Thread: " << kernel->currentThread->getName() << endl;
+    cout << "in evictPage" << endl;
+    cout << "evict Thread: " << kernel->currentThread->getName() << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
@@ -365,16 +359,6 @@ int AddrSpace::evictPage(int vpn)
 int AddrSpace::SwapOut(int vpn)
 {
     // cout << "in SwapOut function" << endl;
-    // char vmFileName[strlen(kernel->currentThread->getName())];
-    // strcpy(vmFileName, kernel->currentThread->getName());
-    // strcat(vmFileName, "_vm");
-    // cout << "vmFileName: " <<  vmFileName << endl;
-    // OpenFile *vm = kernel->fileSystem->Open(vmFileName);
-
-    // if (kernel->currentThread->space->vm)
-    //     cout << "Open vm succeed" << endl;
-    // else
-    //     cout << "Failed to open vm file" << endl;
     // cout << "swap out phy page: " << pageTable[vpn].physicalPage << endl;
     // cout << "swap out phy address: " << pageTable[vpn].physicalPage * PageSize << endl;
     // cout << "swap out valid: " << pageTable[vpn].valid << endl;
