@@ -259,7 +259,7 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     *physAddr = pageFrame * PageSize + offset;
 	cout << "phys addr = " << *physAddr << endl;
 	cout << "thread = " << kernel->currentThread->getName()<< endl;
-	cout << "Used Process " << kernel->invertTable[physNum] << endl;
+	cout << "Used Process " << kernel->invertTable[pageFrame] << endl;
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG(dbgAddr, "phys addr = " << *physAddr);
     return NoException;
