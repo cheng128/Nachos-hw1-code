@@ -319,6 +319,7 @@ int AddrSpace::FindVictim()
 {
     // cout << "in FindVictim function" << endl;
     unsigned int ppn = rand() % NumPhysPages;
+    kernel->machine->PhyPageStatus[ppn] = TRUE;
     return ppn;
 }
 
