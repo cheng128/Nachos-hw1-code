@@ -345,7 +345,7 @@ int  AddrSpace::loadPage(int vpn)
 
 int AddrSpace::evictPage(int vpn)
 {
-    // cout << "in evictPage" << endl;
+    cout << "in evictPage" << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
@@ -359,7 +359,7 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    // cout << "in SwapOut function" << endl;
+    cout << "in SwapOut function" << endl;
     // char vmFileName[strlen(kernel->currentThread->getName())];
     // strcpy(vmFileName, kernel->currentThread->getName());
     // strcat(vmFileName, "_vm");
@@ -377,7 +377,7 @@ int AddrSpace::SwapOut(int vpn)
     int a = kernel->currentThread->space->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                                                         PageSize,
                                                         pageTable[vpn].virtualPage * PageSize);
-    // cout << "swap out: " << a << endl;
+    cout << "swap out: " << a << endl;
     return 0;
 }  
 //HW3>
