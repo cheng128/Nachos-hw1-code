@@ -124,7 +124,7 @@ AddrSpace::Load(char *fileName)
     //                                             // to run anything too big --
     //                                             // at least until we have
     //                                             // virtual memory
-
+    cout << "size: " << size << endl;
     cout << "numPages: " << numPages << endl; 
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
