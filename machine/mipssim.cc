@@ -114,7 +114,7 @@ TypeToReg(RegType reg, Instruction *instr)
 void
 Machine::OneInstruction(Instruction *instr)
 {	
-	cout << kernel->currentThread->getName() << " in OneInstruction" << endl;
+		// cout << kernel->currentThread->getName() << " in OneInstruction" << endl;
     int raw;
     int nextLoadReg = 0; 	
     int nextLoadValue = 0; 	// record delayed load operation, to apply
