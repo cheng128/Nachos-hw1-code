@@ -91,7 +91,7 @@ Machine::ReadMem(int addr, int size, int *value)
     int data;
     ExceptionType exception;
     int physicalAddress;
-    
+    cout << "virtual address: "<< addr << endl;
     DEBUG(dbgAddr, "Reading VA " << addr << ", size " << size);
     
     exception = Translate(addr, &physicalAddress, size, FALSE);

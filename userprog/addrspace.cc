@@ -333,7 +333,7 @@ int  AddrSpace::loadPage(int vpn)
                         PageSize,
                         pageTable[vpn].virtualPage * PageSize);
 
-    // cout << "loadPage phy address: " << pageTable[vpn].physicalPage * PageSize << "   a: " << a << endl;
+    cout << "loadPage phy address: " << pageTable[vpn].physicalPage * PageSize << "   a: " << a << endl;
     return 0;
 }
 
