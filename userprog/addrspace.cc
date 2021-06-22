@@ -316,7 +316,7 @@ int  AddrSpace::loadPage(int vpn)
 {
 
     bzero(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize);
-    int a = kernel->currentThread->space->vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
+    int a = this->vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                                                     PageSize,
                                                     pageTable[vpn].virtualPage * PageSize);
     return 0;
