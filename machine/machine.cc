@@ -58,7 +58,8 @@ Machine::Machine(bool debug)
     int i;
     for(i=0;i<NumPhysPages;i++)
 		PhyPageStatus[i]=FALSE;
-
+    
+    lock = new Lock("mapLock");
 
     for (i = 0; i < NumTotalRegs; i++)
         registers[i] = 0;

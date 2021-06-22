@@ -25,6 +25,8 @@
 #include "utility.h"
 #include "translate.h"
 
+#include "synch.h"
+
 
 // Definitions related to the size, and format of user memory
 #define PageSize 128
@@ -134,7 +136,7 @@ class Machine {
     unsigned int pageTableSize;
     bool ReadMem(int addr, int size, int* value);
 
-
+	Lock* lock;
 	bool PhyPageStatus[NumPhysPages];
   private:
 
