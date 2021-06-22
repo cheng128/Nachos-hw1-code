@@ -12,6 +12,7 @@
 #include "synchdisk.h"
 #include "filesys.h"
 
+
 //----------------------------------------------------------------------
 // UserProgKernel::UserProgKernel
 // 	Interpret command line arguments in order to determine flags 
@@ -56,6 +57,8 @@ void
 UserProgKernel::Initialize()
 {
     ThreadedKernel::Initialize();	// init multithreading
+
+	lock = new Lock("mapLock");
 
     machine = new Machine(debugUserProg);
     fileSystem = new FileSystem();
