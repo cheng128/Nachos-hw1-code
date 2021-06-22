@@ -12,7 +12,6 @@
 #include "synchdisk.h"
 #include "filesys.h"
 
-
 //----------------------------------------------------------------------
 // UserProgKernel::UserProgKernel
 // 	Interpret command line arguments in order to determine flags 
@@ -95,7 +94,6 @@ UserProgKernel::Run()
 {
 
 	cout << "Total threads number is " << execfileNum << endl;
-	lock = new Lock("mapLock");
 	for (int n=1;n<=execfileNum;n++)
 		{
 			t[n] = new Thread(execfile[n]);
@@ -106,7 +104,6 @@ UserProgKernel::Run()
 			strcat(vmFileName, "_vm");
 			kernel->fileSystem->Create(vmFileName);
 			t[n]->space->vm = kernel->fileSystem->Open(vmFileName);
-			
 			t[n]->Fork((VoidFunctionPtr) &ForkExecute, (void *)t[n]);
 			cout << "Thread " << execfile[n] << " is executing." << endl;
 		}
