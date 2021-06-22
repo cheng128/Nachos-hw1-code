@@ -24,9 +24,7 @@
 #include "copyright.h"
 #include "main.h"
 #include "syscall.h"
-#include "synch.h"
 
-Lock* memoryPagingLock = NULL;
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -116,15 +114,7 @@ ExceptionHandler(ExceptionType which)
 		}
 		case PageFaultException:
 		{
-			if (memoryPagingLock == NULL)
-			memoryPagingLock = new Lock("memoryPagingLock");
-			// cout << "VirtualAdd: " << vpn << endl;
-			// cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
-			// cout << "currentThread->space: " << kernel->currentThread->space << endl;
-			int vpn = kernel->machine->ReadRegister(BadVAddrReg) / PageSize;
-			memoryPagingLock->Acquire();
-			kernel->currentThread->space->pageFault(vpn);
-			memoryPagingLock->Release();
+
 		}
 		break;
 		

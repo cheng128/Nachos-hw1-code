@@ -554,6 +554,7 @@ Machine::OneInstruction(Instruction *instr)
 	break;
     	
       case OP_SYSCALL:
+
 	RaiseException(SyscallException, 0);
 //	return; 
 	break;
