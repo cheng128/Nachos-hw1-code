@@ -16,10 +16,10 @@
  * OpCode values.  The names are straight from the MIPS
  * manual except for the following special ones:
  *
- * OP_UNIMP -		means that this instruction is legal, but hasn't
- *			been implemented in the simulator yet.
+ * OP_UNIMP -	means that this instruction is legal, but hasn't
+ *				been implemented in the simulator yet.
  * OP_RES -		means that this is a reserved opcode (it isn't
- *			supported by the architecture).
+ *				supported by the architecture).
  */
 
 #define OP_ADD		1
