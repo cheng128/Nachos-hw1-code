@@ -287,10 +287,10 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     if (physNum == -1)
     {
         physNum = FindVictim();
+        cout << "Find Victim physNum: " << physNum << endl;
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
-    cout << "space: " << space << endl;
-    cout << "physNum: " << physNum << endl;
+    
 
     kernel->UsedProcess[physNum] = space;
     cout << "After UsedProcess[physNum]: " << kernel->UsedProcess[physNum] << endl;
@@ -330,6 +330,7 @@ int  AddrSpace::loadPage(int vpn)
 
 int AddrSpace::evictPage(int vpn)
 {
+    cout << "in evictPage: " << kernel->UsedProcess[physNum] << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
