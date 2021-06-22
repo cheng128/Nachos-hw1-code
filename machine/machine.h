@@ -25,11 +25,6 @@
 #include "utility.h"
 #include "translate.h"
 
-#include "thread.h"
-#include "list.h"
-#include "main.h"
-#include "synch.h"
-
 // Definitions related to the size, and format of user memory
 #define PageSize 128
 // const unsigned int PageSize = 128; 		// set the page size equal to
@@ -138,7 +133,7 @@ class Machine {
     unsigned int pageTableSize;
     bool ReadMem(int addr, int size, int* value);
 
-	Lock* FindPageLock;
+
 	bool PhyPageStatus[NumPhysPages];
   private:
 
