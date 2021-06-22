@@ -16,7 +16,6 @@
 #include "filesys.h"
 #include "machine.h"
 #include "synchdisk.h"
-#include "synch.h"
 
 class SynchDisk;
 class UserProgKernel : public ThreadedKernel {
@@ -42,7 +41,6 @@ class UserProgKernel : public ThreadedKernel {
   //<HW3
   AddrSpace *UsedProcess[NumPhysPages];
   unsigned int invertTable[NumPhysPages];
-  
   //HW3>
 
   private:
@@ -50,8 +48,6 @@ class UserProgKernel : public ThreadedKernel {
 	Thread* t[10];
 	char*	execfile[10];
 	int	execfileNum;
-
-  Lock* lock;
 };
 
 #endif //USERKERNEL_H
