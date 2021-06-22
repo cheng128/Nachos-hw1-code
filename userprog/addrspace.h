@@ -16,11 +16,6 @@
 #include "copyright.h"
 #include "filesys.h"
 #include <string.h>
-#include "main.h"
-#include "synch.h"
-#include "list.h"
-#include "machine.h"
-
 
 #define UserStackSize		9344 	// increase this as necessary!
 
@@ -44,7 +39,6 @@ class AddrSpace {
     int evictPage(int vpn);
     int SwapOut(int vpn);
     OpenFile *vm;
-    Lock* lock;
     //HW3>
 
   private:
