@@ -125,7 +125,7 @@ AddrSpace::Load(char *fileName)
     //                                             // at least until we have
     //                                             // virtual memory
 
-
+    cout << "numPages: " << numPages << endl; 
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
@@ -148,22 +148,19 @@ AddrSpace::Load(char *fileName)
         buf1 = new char[noffH.code.size];
         int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
         // cout << "Load executable: " << a << endl;
-        // if (kernel->currentThread->space->vm)
-        //     cout << "vm succeed" << endl;
         int b = kernel->currentThread->space->vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
-        // cout << "after write vm code: " << b << endl;
+        cout << "after write vm code: " << b << endl;
     }
 
 	if (noffH.initData.size > 0) {
         DEBUG(dbgAddr, "Initializing data segment.");
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
-        // cout << "Initializing data segment." << endl;
         char *buf2;
         buf2 = new char[noffH.initData.size];
         int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
         // cout << "Load executable init data: " << a << endl;
         int b = kernel->currentThread->space->vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
-        // cout << "after write vm init: " << b << endl;
+        cout << "after write vm init: " << b << endl;
     }
 
     delete executable;			// close file
