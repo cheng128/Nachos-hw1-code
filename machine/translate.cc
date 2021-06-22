@@ -219,17 +219,17 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 		}
 		else if (!pageTable[vpn].valid)
 		{
-	    DEBUG(dbgAddr, "Invalid virtual page # " << virtAddr);
-		if (memoryPagingLock == NULL)
-			memoryPagingLock = new Lock("memoryPagingLock");
-		// cout << "VirtualAdd: " << vpn << endl;
-		// cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
-		// cout << "currentThread->space: " << kernel->currentThread->space << endl;
-		memoryPagingLock->Acquire();
-		kernel->currentThread->space->pageFault(vpn);
-		memoryPagingLock->Release();
-		// cout << "return Exception" << endl;
-	    // return PageFaultException;
+	    	DEBUG(dbgAddr, "Invalid virtual page # " << virtAddr);
+			if (memoryPagingLock == NULL)
+				memoryPagingLock = new Lock("memoryPagingLock");
+			// cout << "VirtualAdd: " << vpn << endl;
+			// cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
+			// cout << "currentThread->space: " << kernel->currentThread->space << endl;
+			memoryPagingLock->Acquire();
+			kernel->currentThread->space->pageFault(vpn);
+			memoryPagingLock->Release();
+			// cout << "return Exception" << endl;
+			return PageFaultException;
 		}
 		entry = &pageTable[vpn];
     }
@@ -250,21 +250,23 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 		}
     }
 
-    if (entry->readOnly && writing) {	// trying to write to a read-only page
-	DEBUG(dbgAddr, "Write to read-only page at " << virtAddr);
-	return ReadOnlyException;
+    if (entry->readOnly && writing)
+	{	// trying to write to a read-only page
+		DEBUG(dbgAddr, "Write to read-only page at " << virtAddr);
+		return ReadOnlyException;
     }
     pageFrame = entry->physicalPage;
 
     // if the pageFrame is too big, there is something really wrong! 
     // An invalid translation was loaded into the page table or TLB. 
-    if (pageFrame >= NumPhysPages) { 
-	DEBUG(dbgAddr, "Illegal pageframe " << pageFrame);
-	return BusErrorException;
+    if (pageFrame >= NumPhysPages)
+	{ 
+		DEBUG(dbgAddr, "Illegal pageframe " << pageFrame);
+		return BusErrorException;
     }
     entry->use = TRUE;		// set the use, dirty bits
     if (writing)
-	entry->dirty = TRUE;
+		entry->dirty = TRUE;
     *physAddr = pageFrame * PageSize + offset;
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG(dbgAddr, "phys addr = " << *physAddr);
