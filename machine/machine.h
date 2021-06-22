@@ -133,8 +133,9 @@ class Machine {
     unsigned int pageTableSize;
     bool ReadMem(int addr, int size, int* value);
 
-
+	//<HW3
 	bool PhyPageStatus[NumPhysPages];
+	//HW3>
   private:
 
 // Routines internal to the machine simulation -- DO NOT call these directly

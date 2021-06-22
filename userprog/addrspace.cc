@@ -120,23 +120,18 @@ AddrSpace::Load(char *fileName)
 	// 		+ UserStackSize;	// we need to increase the size
 	// 					        // to leave room for the stack
     size = 16384;
-    cout << fileName << endl;
-    cout << "noffH.code.size + noffH.initData.size: " << noffH.code.size + noffH.initData.size << endl;
     numPages = divRoundUp(size, PageSize);
     
     
     size = numPages * PageSize;
-
     // ASSERT(numPages <= NumFreePhyPages);		// check we're not trying
     //                                             // to run anything too big --
     //                                             // at least until we have
     //                                             // virtual memory
-    cout << "size: " << size << endl;
-    cout << "numPages: " << numPages << endl; 
+    // cout << "size: " << size << endl;
+    // cout << "numPages: " << numPages << endl; 
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
-        pageTable[i].virtualPage = i;
-        while(idx < NumPhysPages-1 && kernel->machine->PhyPageStatus[idx] == TRUE) idx++;
         pageTable[i].virtualPage = i;
         pageTable[i].physicalPage = i;
         pageTable[i].valid = FALSE;
@@ -153,10 +148,8 @@ AddrSpace::Load(char *fileName)
 	    DEBUG(dbgAddr, noffH.code.virtualAddr << ", " << noffH.code.size);
         char *buf1;
         buf1 = new char[noffH.code.size];
-        int a = executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
-        // cout << "Load executable: " << a << endl;
-        int b = kernel->currentThread->space->vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
-        // cout << "after write vm code: " << b << endl;
+        executable->ReadAt(buf1, noffH.code.size, noffH.code.inFileAddr);
+        kernel->currentThread->space->vm->WriteAt(buf1, noffH.code.size, noffH.code.virtualAddr);
     }
 
 	if (noffH.initData.size > 0) {
@@ -164,10 +157,8 @@ AddrSpace::Load(char *fileName)
 	    DEBUG(dbgAddr, noffH.initData.virtualAddr << ", " << noffH.initData.size);
         char *buf2;
         buf2 = new char[noffH.initData.size];
-        int a = executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
-        // cout << "Load executable init data: " << a << endl;
-        int b = kernel->currentThread->space->vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
-        // cout << "after write vm init: " << b << endl;
+        executable->ReadAt(buf2, noffH.initData.size, noffH.initData.inFileAddr);
+        kernel->currentThread->space->vm->WriteAt(buf2, noffH.initData.size, noffH.initData.virtualAddr);
     }
 
     delete executable;			// close file
@@ -288,7 +279,6 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     if (physNum == -1)
     {
         physNum = FindVictim();
-
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
     
@@ -313,16 +303,25 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
-    
-    // for(unsigned int i=0; i<NumPhysPages; i++)
+    // int firstZero;
+    // bool found;
+
+    // for (unsigned int i=0; i<NumPhysPages; i++)
     // {
-    //     if(kernel->UsedProcess[i].used == FALSE)
+    //     if(kernel->LRU[i] == 0)
     //     {
-    //         return i;
+    //         firstZero = i;
+    //         found = TRUE;
+    //         break
     //     }
-    //     else
+    // }
+
+    // unsigned int ppn;
+    // if(found)
+    // {
+    //     for(unsigned int i=0; i<NumPhysPages; i++)
     //     {
-    //         kernel->UsedProcess[i].used = FALSE;
+    //         if (kernel->LRU[i]==0 and )
     //     }
     // }
 
@@ -337,9 +336,9 @@ int  AddrSpace::loadPage(int vpn)
 {
 
     bzero(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize);
-    int a = this->vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
-                                                    PageSize,
-                                                    pageTable[vpn].virtualPage * PageSize);
+    this->vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
+                    PageSize,
+                    pageTable[vpn].virtualPage * PageSize);
     return 0;
 }
 

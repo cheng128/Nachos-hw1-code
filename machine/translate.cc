@@ -250,8 +250,17 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 		return BusErrorException;
     }
     entry->use = TRUE;		// set the use, dirty bits
+
+	// for(unsigned int i=0; i<NumPhysPages; i++)
+	// {
+	// 	kernel->FifoTime[i] += 1;
+	// }
+	
+	// kernel->FifoTime[pageFrame] = 0;
+	// kernel->UsedProcess[pageFrame]->LRU = 0;
+
     if (writing)
-	entry->dirty = TRUE;
+		entry->dirty = TRUE;
     *physAddr = pageFrame * PageSize + offset;
 	// cout << "phys addr = " << *physAddr << endl;
 	// cout << "thread = " << kernel->currentThread->getName()<< endl;

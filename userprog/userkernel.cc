@@ -57,6 +57,11 @@ UserProgKernel::Initialize()
 {
     ThreadedKernel::Initialize();	// init multithreading
 
+	// for(unsigned int i=0; i<NumPhysPages; i++)
+	// {
+	// 	LRU[i] = 0;
+	// }
+
     machine = new Machine(debugUserProg);
     fileSystem = new FileSystem();
 #ifdef FILESYS
@@ -103,8 +108,8 @@ UserProgKernel::Run()
 			strcpy(vmFileName, t[n]->getName());
 			strcat(vmFileName, "_vm");
 			kernel->fileSystem->Create(vmFileName);
-
 			t[n]->space->vm = kernel->fileSystem->Open(vmFileName);
+
 			t[n]->Fork((VoidFunctionPtr) &ForkExecute, (void *)t[n]);
 			cout << "Thread " << execfile[n] << " is executing." << endl;
 		}
