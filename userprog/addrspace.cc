@@ -346,6 +346,7 @@ int AddrSpace::evictPage(int vpn)
 int AddrSpace::SwapOut(int vpn)
 {
     cout << "in swapout: " << this << endl;
+    cout << "kernel->currentThread: " << kernel->currentThread->space << endl;
     int a = this->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                                                         PageSize,
                                                         pageTable[vpn].virtualPage * PageSize);
