@@ -133,6 +133,7 @@ ExceptionHandler(ExceptionType which)
 		}
 		break;
 		default:
+			cout << kernel->currentThread->getName(); << endl;
 			cerr << "Unexpected user mode exception" << which << "\n";
 			break;
 	}
