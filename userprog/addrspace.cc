@@ -100,6 +100,7 @@ AddrSpace::Load(char *fileName)
     OpenFile *executable = kernel->fileSystem->Open(fileName);
     NoffHeader noffH;
     unsigned int size;
+    lock = new Lock("mapLock");
 
     if (executable == NULL) {
 	cerr << "Unable to open file " << fileName << "\n";
@@ -280,7 +281,7 @@ int AddrSpace::pageFault(int vpn)
 
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
-    
+    lock->Acquire();
     // cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
     // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
@@ -294,6 +295,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
     // cout << "before return physNum: " << physNum << endl;
+    lock->Release();
     return physNum;
 }
 
