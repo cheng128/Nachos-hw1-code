@@ -80,6 +80,10 @@ AddrSpace::AddrSpace()
 AddrSpace::~AddrSpace()
 {
     kernel->fileSystem->Remove(strcat(kernel->currentThread->getName(), "_vm"));
+    for(unsigned int i=0; i<numPages; i++)
+    {
+        kernel->machine->PhyPageStatus[pageTable[i].physicalPage] = FALSE;
+    }
     delete pageTable;
 }
 
@@ -289,7 +293,6 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     }
     
     kernel->UsedProcess[physNum] = space;
-
     kernel->invertTable[physNum] = vpn;
     kernel->lock->Release();
     return physNum;
@@ -310,6 +313,22 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
+    
+    // for(unsigned int i=0; i<NumPhysPages; i++)
+    // {
+    //     if(kernel->UsedProcess[i].used == FALSE)
+    //     {
+    //         return i;
+    //     }
+    //     else
+    //     {
+    //         kernel->UsedProcess[i].used = FALSE;
+    //     }
+    // }
+
+    // return 0;
+
+    // kernel->UsedProcess[i]
     unsigned int ppn = rand() % NumPhysPages;
     return ppn;
 }
