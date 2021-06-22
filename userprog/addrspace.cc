@@ -317,8 +317,9 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
-    // cout << "in FindVictim function" << endl;
+    cout << "in FindVictim function" << endl;
     unsigned int ppn = rand() % NumPhysPages;
+    cout << "victim: " << kernel->UsedProcess[ppn] << endl;
     return ppn;
 }
 
