@@ -121,6 +121,7 @@ ExceptionHandler(ExceptionType which)
 			// cout << "VirtualAdd: " << vpn << endl;
 			// cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
 			// cout << "currentThread->space: " << kernel->currentThread->space << endl;
+			int vpn = machine->ReadRegister(BadVAddrReg) / PageSize;
 			memoryPagingLock->Acquire();
 			kernel->currentThread->space->pageFault(vpn);
 			memoryPagingLock->Release();
