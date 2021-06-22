@@ -192,7 +192,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     TranslationEntry *entry;
     unsigned int pageFrame;
     DEBUG(dbgAddr, "\tTranslate " << virtAddr << (writing ? " , write" : " , read"));
-	cout << "virtAddr: " << virtAddr << endl;
 // check for alignment errors
     if (((size == 4) && (virtAddr & 0x3)) || ((size == 2) && (virtAddr & 0x1))){
 	DEBUG(dbgAddr, "Alignment problem at " << virtAddr << ", size " << size);
@@ -211,6 +210,7 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     if (tlb == NULL) {		// => page table => vpn is index into table
 	if (vpn >= pageTableSize) {
 	    DEBUG(dbgAddr, "Illegal virtual page # " << virtAddr);
+		cout << "Illegal virtAddr: " << virtAddr << endl;
 	    return AddressErrorException;
 	} else if (!pageTable[vpn].valid) {
 	    DEBUG(dbgAddr, "Invalid virtual page # " << virtAddr);
@@ -220,6 +220,7 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 		// cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
 		// cout << "currentThread->space: " << kernel->currentThread->space << endl;
 		memoryPagingLock->Acquire();
+		cout << "virtAddr: " << virtAddr << endl;
 		kernel->currentThread->space->pageFault(vpn);
 		memoryPagingLock->Release();
 		// cout << "return Exception" << endl;
