@@ -278,21 +278,16 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
     kernel->lock->Acquire();
 
-    for(unsigned int i=0; i<NumPhysPages; i++)
-    {
-        cout << "Before UsedProcess[" << i << "]: " << kernel->UsedProcess[i] << endl;
-    }
-
     int physNum = FindFreePage();
     if (physNum == -1)
     {
         physNum = FindVictim();
-        cout << "Find Victim physNum: " << physNum << endl;
+
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
     
     kernel->UsedProcess[physNum] = space;
-    cout << "After UsedProcess[physNum]: " << kernel->UsedProcess[physNum] << endl;
+
     kernel->invertTable[physNum] = vpn;
     kernel->lock->Release();
     return physNum;
@@ -329,7 +324,7 @@ int  AddrSpace::loadPage(int vpn)
 
 int AddrSpace::evictPage(int vpn)
 {
-    cout << "in evictPage: " << this << endl;
+
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
@@ -345,8 +340,7 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    cout << "in swapout: " << this << endl;
-    cout << "kernel->currentThread: " << kernel->currentThread->space << endl;
+
     int a = this->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                                                         PageSize,
                                                         pageTable[vpn].virtualPage * PageSize);
