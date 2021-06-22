@@ -112,10 +112,10 @@ AddrSpace::Load(char *fileName)
     ASSERT(noffH.noffMagic == NOFFMAGIC);
 
 // how big is address space?
-    size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
-			+ UserStackSize;	// we need to increase the size
+    // size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
+	// 		+ UserStackSize;	// we need to increase the size
 	// 					        // to leave room for the stack
-    // size = 16384;
+    size = 16384;
     cout << fileName << endl;
     cout << "noffH.code.size + noffH.initData.size: " << noffH.code.size + noffH.initData.size << endl;
     numPages = divRoundUp(size, PageSize);
