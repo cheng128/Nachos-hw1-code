@@ -97,7 +97,6 @@ Machine::ReadMem(int addr, int size, int *value)
     exception = Translate(addr, &physicalAddress, size, FALSE);
     if (exception != NoException) {
 		RaiseException(exception, addr);
-		cout << "back to ReadMem" << endl;
 		return FALSE;
     }
     switch (size) {
@@ -208,13 +207,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 // from the virtual address
     vpn = (unsigned) virtAddr / PageSize;
     offset = (unsigned) virtAddr % PageSize;
-    
-	for(unsigned int i=0; i<pageTableSize/128; i++)
-	{
-		cout << "page entry: " << i << endl;
-		cout << "physical page: " << pageTable[i] << endl;
-		cout << "valid? " << pageTable[i].valid << endl;
-	}
 
     if (tlb == NULL) {		// => page table => vpn is index into table
 	if (vpn >= pageTableSize) {
