@@ -25,6 +25,9 @@
 #include "utility.h"
 #include "translate.h"
 
+#include "thread.h"
+#include "list.h"
+#include "main.h"
 #include "synch.h"
 
 // Definitions related to the size, and format of user memory
