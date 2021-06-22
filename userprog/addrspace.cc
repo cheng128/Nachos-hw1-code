@@ -263,7 +263,7 @@ int AddrSpace::pageFault(int vpn)
     kernel->stats->numPageFaults ++;
     // cout << "in pageFault before into AllocPage" << endl;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
-    cout << "in pageFatulte after AllocPage find physicalpage: " << pageTable[vpn].physicalPage << endl;
+    // cout << "in pageFatulte after AllocPage find physicalpage: " << pageTable[vpn].physicalPage << endl;
     
     // cout << "pageTable[vpn].physicalPage: " << pageTable[vpn].physicalPage << endl;
     loadPage(vpn);
@@ -292,8 +292,8 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     }
 
     kernel->UsedProcess[physNum] = space;
-    cout << "in Alloc Page new kernel->UsedProcess[physNum]: " <<  kernel->UsedProcess[physNum] << endl;
-    cout << "current thread: " << kernel->currentThread->getName() << endl;
+    // cout << "in Alloc Page new kernel->UsedProcess[physNum]: " <<  kernel->UsedProcess[physNum] << endl;
+    // cout << "current thread: " << kernel->currentThread->getName() << endl;
     kernel->invertTable[physNum] = vpn;
     // cout << "before return physNum: " << physNum << endl;
     kernel->lock->Release();
@@ -307,7 +307,7 @@ int AddrSpace::FindFreePage()
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
-            cout << "find Free Page" << endl;
+            // cout << "find Free Page" << endl;
             kernel->machine->PhyPageStatus[i] = TRUE;
             return i;
         }
@@ -317,9 +317,9 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
-    cout << "in FindVictim function" << endl;
+    // cout << "in FindVictim function" << endl;
     unsigned int ppn = rand() % NumPhysPages;
-    cout << "victim: " << kernel->UsedProcess[ppn] << endl;
+    // cout << "victim: " << kernel->UsedProcess[ppn] << endl;
     return ppn;
 }
 
@@ -346,8 +346,8 @@ int  AddrSpace::loadPage(int vpn)
 
 int AddrSpace::evictPage(int vpn)
 {
-    cout << "in evictPage" << endl;
-    cout << "evict Thread: " << kernel->currentThread->getName() << endl;
+    // cout << "in evictPage" << endl;
+    // cout << "evict Thread: " << kernel->currentThread->getName() << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
