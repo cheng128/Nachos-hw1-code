@@ -43,7 +43,6 @@ class UserProgKernel : public ThreadedKernel {
   //<HW3
   AddrSpace *UsedProcess[NumPhysPages];
   unsigned int invertTable[NumPhysPages];
-  Lock* lock;
   //HW3>
 
   private:
@@ -51,6 +50,7 @@ class UserProgKernel : public ThreadedKernel {
 	Thread* t[10];
 	char*	execfile[10];
 	int	execfileNum;
+  Lock* lock;
 };
 
 #endif //USERKERNEL_H
