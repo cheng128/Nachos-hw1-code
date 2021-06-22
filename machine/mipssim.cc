@@ -51,6 +51,7 @@ class Instruction {
 void
 Machine::Run()
 {
+	cout << kernel->currentThread->getName() << " in machine run" << endl;
     Instruction *instr = new Instruction;  // storage for decoded instruction
     if (debug->IsEnabled('m')) {
         cout << "Starting program in thread: " << kernel->currentThread->getName();

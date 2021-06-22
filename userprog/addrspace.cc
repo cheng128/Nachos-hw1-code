@@ -179,7 +179,6 @@ AddrSpace::Load(char *fileName)
 void 
 AddrSpace::Execute(char *fileName) 
 {   
-    cout << fileName << "in execute" << endl;
     if (!Load(fileName)) {
 	return;				// executable not found
     }
