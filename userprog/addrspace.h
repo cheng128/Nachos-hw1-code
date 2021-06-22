@@ -18,6 +18,7 @@
 #include <string.h>
 #include "main.h"
 #include "synch.h"
+#include "list.h"
 
 
 #define UserStackSize		9344 	// increase this as necessary!
