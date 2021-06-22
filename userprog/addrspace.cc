@@ -282,7 +282,6 @@ int AddrSpace::pageFault(int vpn)
 int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
     kernel->lock->Acquire();
-    cout << "in AllocPage function" << endl;
     int physNum = FindFreePage();
     cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
@@ -347,7 +346,7 @@ int  AddrSpace::loadPage(int vpn)
 int AddrSpace::evictPage(int vpn)
 {
     cout << "in evictPage" << endl;
-    cout << "current Thread: " << kernel->currentThread->getName() << endl;
+    cout << "evict Thread: " << kernel->currentThread->getName() << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
