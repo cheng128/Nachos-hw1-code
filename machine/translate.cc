@@ -220,7 +220,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 		// cout << "currentThread->name: " << kernel->currentThread->getName() << endl;
 		// cout << "currentThread->space: " << kernel->currentThread->space << endl;
 		memoryPagingLock->Acquire();
-		cout << kernel->currentThread->getName() << endl;
 		kernel->currentThread->space->pageFault(vpn);
 		memoryPagingLock->Release();
 		// cout << "return Exception" << endl;
