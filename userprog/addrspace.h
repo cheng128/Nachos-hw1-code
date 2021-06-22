@@ -17,7 +17,7 @@
 #include "filesys.h"
 #include <string.h>
 
-#define UserStackSize		1024 	// increase this as necessary!
+#define UserStackSize		2048 	// increase this as necessary!
 
 class AddrSpace {
   public:
@@ -38,6 +38,7 @@ class AddrSpace {
     int loadPage(int vpn);
     int evictPage(int vpn);
     int SwapOut(int vpn);
+    OpenFile *vm;
     //HW3>
 
   private:
