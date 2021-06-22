@@ -192,7 +192,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     unsigned int vpn, offset;
     TranslationEntry *entry;
     unsigned int pageFrame;
-	cout << "virtAddr: " << virtAddr << endl;
     DEBUG(dbgAddr, "\tTranslate " << virtAddr << (writing ? " , write" : " , read"));
 
 // check for alignment errors
