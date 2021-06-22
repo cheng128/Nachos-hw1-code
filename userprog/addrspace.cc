@@ -261,7 +261,7 @@ int AddrSpace::pageFault(int vpn)
 {
     // cout << "in pageFault function: vpn = " << vpn << endl;
     kernel->stats->numPageFaults ++;
-    cout << "in pageFault before into AllocPage" << endl;
+    // cout << "in pageFault before into AllocPage" << endl;
     pageTable[vpn].physicalPage = AllocPage(this, vpn);
     cout << "in pageFatulte after AllocPage find physicalpage: " << pageTable[vpn].physicalPage << endl;
     
@@ -283,11 +283,11 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
 {   
     kernel->lock->Acquire();
     int physNum = FindFreePage();
-    cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
+    // cout << "Alloc: PhysNum after FindFree: " << physNum << endl;
     if (physNum == -1)
     {
         physNum = FindVictim();
-        cout << "Alloc: victim: " << physNum << endl;
+        // cout << "Alloc: victim: " << physNum << endl;
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
 
@@ -362,7 +362,7 @@ int AddrSpace::evictPage(int vpn)
 
 int AddrSpace::SwapOut(int vpn)
 {
-    cout << "in SwapOut function" << endl;
+    // cout << "in SwapOut function" << endl;
     // char vmFileName[strlen(kernel->currentThread->getName())];
     // strcpy(vmFileName, kernel->currentThread->getName());
     // strcat(vmFileName, "_vm");
@@ -380,7 +380,7 @@ int AddrSpace::SwapOut(int vpn)
     int a = kernel->currentThread->space->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
                                                         PageSize,
                                                         pageTable[vpn].virtualPage * PageSize);
-    cout << "swap out: " << a << endl;
+    // cout << "swap out: " << a << endl;
     return 0;
 }  
 //HW3>
