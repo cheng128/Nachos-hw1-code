@@ -356,6 +356,8 @@ int AddrSpace::evictPage(int vpn)
 	pageTable[vpn].valid = FALSE;
 	pageTable[vpn].use = FALSE;
 	pageTable[vpn].dirty = FALSE;
+
+    return 0;
 }
 
 int AddrSpace::SwapOut(int vpn)
