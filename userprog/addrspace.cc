@@ -293,7 +293,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     }
 
     kernel->UsedProcess[physNum] = space;
-    cout << " kernel->UsedProcess[physNum]: " <<  kernel->UsedProcess[physNum] << endl;
+    cout << "in Alloc Page new kernel->UsedProcess[physNum]: " <<  kernel->UsedProcess[physNum] << endl;
     cout << "current thread: " << kernel->currentThread->getName() << endl;
     kernel->invertTable[physNum] = vpn;
     // cout << "before return physNum: " << physNum << endl;
@@ -347,6 +347,7 @@ int  AddrSpace::loadPage(int vpn)
 int AddrSpace::evictPage(int vpn)
 {
     cout << "in evictPage" << endl;
+    cout << "current Thread: " << kernel->currentThread->getName() << endl;
     if(pageTable[vpn].dirty)
     {
         SwapOut(vpn);
