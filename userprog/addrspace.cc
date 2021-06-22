@@ -292,10 +292,8 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
     cout << "space: " << space << endl;
     cout << "physNum: " << physNum << endl;
 
-    cout << "After UsedProcess[physNum]: " << kernel->UsedProcess[physNum] << endl;
-
-
     kernel->UsedProcess[physNum] = space;
+    cout << "After UsedProcess[physNum]: " << kernel->UsedProcess[physNum] << endl;
     kernel->invertTable[physNum] = vpn;
     kernel->lock->Release();
     return physNum;
