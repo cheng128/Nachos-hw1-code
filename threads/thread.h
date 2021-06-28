@@ -142,7 +142,7 @@ extern void ThreadPrint(Thread *thread);
 
 extern "C" {
 // First frame on thread execution stack; 
-//   	call ThreadBegin
+//  call ThreadBegin
 //	call "func"
 //	(when func returns, if ever) call ThreadFinish()
 void ThreadRoot();

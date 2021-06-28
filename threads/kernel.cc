@@ -92,7 +92,6 @@ ThreadedKernel::Run()
     // other threads on the ready list (started in SelfTest).  
     // We switch to those threads by saying that the "main" thread 
     // is finished, preventing it from returning.
-    cout << "current Thread" << currentThread->getName() << endl;
     currentThread->Finish();	
     // not reached
 }

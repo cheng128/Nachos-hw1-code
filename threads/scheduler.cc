@@ -90,7 +90,7 @@ Scheduler::FindNextToRun ()
 //	and load the state of the new thread, by calling the machine
 //	dependent context switch routine, SWITCH.
 //
-//      Note: we assume the state of the previously running thread has
+//  Note: we assume the state of the previously running thread has
 //	already been changed from running to blocked or ready (depending).
 // Side effect:
 //	The global variable kernel->currentThread becomes nextThread.
@@ -116,14 +116,14 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     }
     
 #ifdef USER_PROGRAM			// ignore until running user programs 
-    if (oldThread->space != NULL) {	// if this thread is a user program,
+    if (oldThread->space != NULL) {	    // if this thread is a user program,
         oldThread->SaveUserState(); 	// save the user's CPU registers
 	oldThread->space->SaveState();
     }
 #endif
     
     oldThread->CheckOverflow();		    // check if the old thread
-					    // had an undetected stack overflow
+					                    // had an undetected stack overflow
 
     kernel->currentThread = nextThread;  // switch to the next thread
     nextThread->setStatus(RUNNING);      // nextThread is now running

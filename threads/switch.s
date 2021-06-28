@@ -27,9 +27,9 @@
  *
  * SWITCH(oldThread, newThread)
  * 	oldThread  - The current thread that was running, where the
- *		CPU register state is to be saved.
+ *				CPU register state is to be saved.
  * 	newThread  - The new thread to be run, where the CPU register
- *		state is to be loaded from.
+ *				state is to be loaded from.
  */
 
 /*

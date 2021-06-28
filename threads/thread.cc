@@ -102,7 +102,6 @@ Thread::Fork(VoidFunctionPtr func, void *arg)
     StackAllocate(func, arg);
 
     oldLevel = interrupt->SetLevel(IntOff);
-    cout << "inside Fork: " << this->getName() << endl; 
     scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts 
 					                // are disabled!
     (void) interrupt->SetLevel(oldLevel);
@@ -180,7 +179,7 @@ Thread::Finish ()
     DEBUG(dbgThread, "Finishing thread: " << name);
     
     Sleep(TRUE);				// invokes SWITCH
-    // not reached
+                                // not reached
 }
 
 //----------------------------------------------------------------------
@@ -342,7 +341,7 @@ Thread::StackAllocate (VoidFunctionPtr func, void *arg)
 
 #ifdef x86
     // the x86 passes the return address on the stack.  In order for SWITCH() 
-    // to go to ThreadRoot when we switch to this thread, the return addres 
+    // to go to ThreadRoot when we switch to this thread, the return address
     // used in SWITCH() must be the starting address of ThreadRoot.
     stackTop = stack + StackSize - 4;	// -4 to be on the safe side!
     *(--stackTop) = (int) ThreadRoot;
