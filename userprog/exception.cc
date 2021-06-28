@@ -125,9 +125,8 @@ ExceptionHandler(ExceptionType which)
 			kernel->currentThread->space->pageFault(vpn);
 			// memoryPagingLock->Release();
 			return;
-			break;
 		}
-		
+		break;
 		case AddressErrorException:
 			cout << "Address Error Exception" << endl;
 			break;		
