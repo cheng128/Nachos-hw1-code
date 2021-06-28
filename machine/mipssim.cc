@@ -141,9 +141,6 @@ Machine::OneInstruction(Instruction *instr)
     int pcAfter = registers[NextPCReg] + 4;
     int sum, diff, tmp, value;
     unsigned int rs, rt, imm;
-	cout << "opcode: " << instr->opCode << endl;
-	cout << "rs: " << instr->rs << endl;
-	cout << "rt: " << instr->rt << endl;
     // Execute the instruction (cf. Kane's book)
     switch (instr->opCode) {
 	
