@@ -114,6 +114,7 @@ ExceptionHandler(ExceptionType which)
 		}
 		case PageFaultException:
 		{
+			cout << "page fault exception" << endl;
 			int virtualAddr = kernel->machine->ReadRegister(BadVAddrReg);
 			unsigned int vpn = virtualAddr / PageSize;
 
@@ -141,6 +142,5 @@ ExceptionHandler(ExceptionType which)
 			cerr << "Unexpected user mode exception" << which << "\n";
 			break;
 	}
-	break;
     ASSERTNOTREACHED();
 }

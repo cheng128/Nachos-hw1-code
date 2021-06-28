@@ -97,8 +97,10 @@ Machine::ReadMem(int addr, int size, int *value)
     exception = Translate(addr, &physicalAddress, size, FALSE);
     if (exception != NoException) {
 		RaiseException(exception, addr);
+		cout << "back to ReadMem" << endl;
 		return FALSE;
     }
+	
     switch (size) {
       case 1:
 	data = mainMemory[physicalAddress];
