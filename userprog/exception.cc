@@ -114,9 +114,9 @@ ExceptionHandler(ExceptionType which)
 		}
 		case PageFaultException:
 		{
-			int virtualAddr = kernel->machine->ReadResgister(BadVAddrReg);
+			int virtualAddr = kernel->machine->ReadRegister(BadVAddrReg);
 			unsigned int vpn = virtualAddr / PageSize;
-			
+
 			if (memoryPagingLock == NULL)
 			memoryPagingLock = new Lock("memoryPagingLock");
 
