@@ -123,28 +123,23 @@ ExceptionHandler(ExceptionType which)
 			// memoryPagingLock->Acquire();
 			kernel->currentThread->space->pageFault(vpn);
 			// memoryPagingLock->Release();
+			return;
+			break;
 		}
-		return;
-		break;
+		
 		case AddressErrorException:
-		{
-			cout << "Address Error Exception" << endl;	
-		}
-		break;	
+			cout << "Address Error Exception" << endl;
+			break;		
 		case ReadOnlyException:
-		{
 			cout << "Read Only Exception" << endl;
-		}
-		break;
+			break;
 		case BusErrorException:
-		{
 			cout << "BusErrorException" << endl;
-		}
-		break;
-	default:
-		cout << kernel->currentThread->getName() << endl;
-		cerr << "Unexpected user mode exception" << which << "\n";
-		break;
+			break;
+		default:
+			cout << kernel->currentThread->getName() << endl;
+			cerr << "Unexpected user mode exception" << which << "\n";
+			break;
 	}
     ASSERTNOTREACHED();
 }
