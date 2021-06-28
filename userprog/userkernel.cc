@@ -114,19 +114,7 @@ UserProgKernel::Run()
 			cout << "Thread " << execfile[n] << " is executing." << endl;
 		}
 	lock = new Lock("mapLock");
-//	Thread *t1 = new Thread(execfile[1]);
-//	Thread *t1 = new Thread("../test/test1");
-//	Thread *t2 = new Thread("../test/test2");
-
-//    AddrSpace *halt = new AddrSpace();
-//	t1->space = new AddrSpace();
-//	t2->space = new AddrSpace();
-
-//    halt->Execute("../test/halt");
-//	t1->Fork((VoidFunctionPtr) &ForkExecute, (void *)t1);
-//	t2->Fork((VoidFunctionPtr) &ForkExecute, (void *)t2);
     ThreadedKernel::Run();
-//	cout << "after ThreadedKernel:Run();" << endl;	// unreachable
 }
 
 //----------------------------------------------------------------------

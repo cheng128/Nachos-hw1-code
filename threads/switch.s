@@ -17,8 +17,8 @@
  *
  * ThreadRoot(InitialPC, InitialArg, WhenDonePC, StartupPC)
  *	InitialPC  - The program counter of the procedure to run
- *			in this thread.
- *      InitialArg - The single argument to the thread.
+ *				 in this thread.
+ *  InitialArg - The single argument to the thread.
  *	WhenDonePC - The routine to call when the thread returns.
  *	StartupPC  - Routine to call when the thread is started.
  *

@@ -53,10 +53,6 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace()
 {
-//     for(unsigned int i = 0; i < NumPhysPages; i++)
-//         AddrSpace::PhyPageStatus[i] = FALSE;
-//     AddrSpace::NumFreePhyPages = NumPhysPages;
-
 //     pageTable = new TranslationEntry[NumPhysPages];
 //     for (unsigned int i = 0; i < NumPhysPages; i++) {
 // 	pageTable[i].virtualPage = i;	// for now, virt page # = phys page #
@@ -128,8 +124,7 @@ AddrSpace::Load(char *fileName)
     //                                             // to run anything too big --
     //                                             // at least until we have
     //                                             // virtual memory
-    // cout << "size: " << size << endl;
-    // cout << "numPages: " << numPages << endl; 
+
     pageTable = new TranslationEntry[numPages];
     for(unsigned int i = 0, idx = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
@@ -209,7 +204,7 @@ AddrSpace::InitRegisters()
     int i;
 
     for (i = 0; i < NumTotalRegs; i++)
-	machine->WriteRegister(i, 0);
+	    machine->WriteRegister(i, 0);
 
     // Initial program counter -- must be location of "Start"
     machine->WriteRegister(PCReg, 0);	
@@ -337,8 +332,8 @@ int  AddrSpace::loadPage(int vpn)
 
     bzero(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize], PageSize);
     this->vm->ReadAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
-                    PageSize,
-                    pageTable[vpn].virtualPage * PageSize);
+                        PageSize,
+                        pageTable[vpn].virtualPage * PageSize);
     return 0;
 }
 
@@ -362,8 +357,8 @@ int AddrSpace::SwapOut(int vpn)
 {
 
     int a = this->vm->WriteAt(&kernel->machine->mainMemory[pageTable[vpn].physicalPage * PageSize],
-                                                        PageSize,
-                                                        pageTable[vpn].virtualPage * PageSize);
+                            PageSize,
+                            pageTable[vpn].virtualPage * PageSize);
     return 0;
 }  
 //HW3>

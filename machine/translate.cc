@@ -225,8 +225,8 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     } else {
         for (entry = NULL, i = 0; i < TLBSize; i++)
     	    if (tlb[i].valid && (tlb[i].virtualPage == vpn)) {
-		entry = &tlb[i];			// FOUND!
-		break;
+			entry = &tlb[i];			// FOUND!
+			break;
 	    }
 	if (entry == NULL) {				// not found
     	    DEBUG(dbgAddr, "Invalid TLB entry for this virtual page!");
