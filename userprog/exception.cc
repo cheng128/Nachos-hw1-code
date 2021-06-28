@@ -126,7 +126,6 @@ ExceptionHandler(ExceptionType which)
 		}
 		return;
 		break;
-		
 		case AddressErrorException:
 		{
 			cout << "Address Error Exception" << endl;	
@@ -147,5 +146,6 @@ ExceptionHandler(ExceptionType which)
 			cerr << "Unexpected user mode exception" << which << "\n";
 			break;
 	}
+	break;
     ASSERTNOTREACHED();
 }
