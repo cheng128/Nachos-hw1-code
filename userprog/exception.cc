@@ -24,7 +24,7 @@
 #include "copyright.h"
 #include "main.h"
 #include "syscall.h"
-#include "synch.h"
+// #include "synch.h"
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -55,7 +55,7 @@ ExceptionHandler(ExceptionType which)
 {
 	int	type = kernel->machine->ReadRegister(2);
 	int	val, status;
-	Lock* memoryPagingLock = NULL;
+	// Lock* memoryPagingLock = NULL;
     switch (which) {
 		case SyscallException:
 		{
@@ -117,12 +117,12 @@ ExceptionHandler(ExceptionType which)
 			int virtualAddr = kernel->machine->ReadRegister(BadVAddrReg);
 			unsigned int vpn = virtualAddr / PageSize;
 
-			if (memoryPagingLock == NULL)
-			memoryPagingLock = new Lock("memoryPagingLock");
+			// if (memoryPagingLock == NULL)
+			// memoryPagingLock = new Lock("memoryPagingLock");
 
-			memoryPagingLock->Acquire();
+			// memoryPagingLock->Acquire();
 			kernel->currentThread->space->pageFault(vpn);
-			memoryPagingLock->Release();
+			// memoryPagingLock->Release();
 			return;
 		}
 		break;
