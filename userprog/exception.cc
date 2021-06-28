@@ -110,7 +110,7 @@ ExceptionHandler(ExceptionType which)
 				cerr << "Unexpected system call " << type << "\n";
 				break;
 			}
-			break;
+		break;
 		}
 		case PageFaultException:
 		{
