@@ -141,11 +141,10 @@ ExceptionHandler(ExceptionType which)
 			cout << "BusErrorException" << endl;
 		}
 		break;
-		default:
-			cout << kernel->currentThread->getName() << endl;
-			cerr << "Unexpected user mode exception" << which << "\n";
-			break;
+	default:
+		cout << kernel->currentThread->getName() << endl;
+		cerr << "Unexpected user mode exception" << which << "\n";
+		break;
 	}
-	break;
     ASSERTNOTREACHED();
 }
