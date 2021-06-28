@@ -78,6 +78,7 @@ AddrSpace::~AddrSpace()
     kernel->fileSystem->Remove(strcat(kernel->currentThread->getName(), "_vm"));
     for(unsigned int i=0; i<numPages; i++)
     {
+        cout <<  "AddrSpace: " << i << endl;
         kernel->machine->PhyPageStatus[pageTable[i].physicalPage] = FALSE;
     }
     delete pageTable;
@@ -126,7 +127,7 @@ AddrSpace::Load(char *fileName)
     //                                             // virtual memory
 
     pageTable = new TranslationEntry[numPages];
-    for(unsigned int i = 0, idx = 0; i < numPages; i++) {
+    for(unsigned int i = 0; i < numPages; i++) {
         pageTable[i].virtualPage = i;
         pageTable[i].physicalPage = i;
         pageTable[i].valid = FALSE;
