@@ -123,8 +123,8 @@ ExceptionHandler(ExceptionType which)
 			// memoryPagingLock->Acquire();
 			kernel->currentThread->space->pageFault(vpn);
 			// memoryPagingLock->Release();
-			return;
 		}
+		return;
 		break;
 		
 		case AddressErrorException:
