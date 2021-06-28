@@ -138,7 +138,8 @@ ExceptionHandler(ExceptionType which)
 			break;
 		default:
 			cout << kernel->currentThread->getName() << endl;
-			cerr << "Unexpected user mode exception" << which << "\n";
+			cout << "Bad Address: " << kernel->machine->ReadRegister(BadVAddrReg) << endl;
+			cerr << "Unexpected user mode exception" << ExceptionType[which] << "\n";
 			break;
 	}
     ASSERTNOTREACHED();
