@@ -102,6 +102,7 @@ Thread::Fork(VoidFunctionPtr func, void *arg)
     StackAllocate(func, arg);
 
     oldLevel = interrupt->SetLevel(IntOff);
+    cout << "inside Fork: " << this->getName() << endl; 
     scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts 
 					                // are disabled!
     (void) interrupt->SetLevel(oldLevel);
