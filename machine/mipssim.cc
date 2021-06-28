@@ -578,7 +578,6 @@ Machine::OneInstruction(Instruction *instr)
 	case OP_UNIMP:
 		RaiseException(IllegalInstrException, 0);
 		return;
-
 	default:
 		ASSERT(FALSE);
     }

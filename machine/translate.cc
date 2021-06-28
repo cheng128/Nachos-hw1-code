@@ -189,6 +189,8 @@ Machine::WriteMem(int addr, int size, int value)
 ExceptionType
 Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 {
+	cout << "physAddr: " << physAddr << endl;
+	cout << "virtAddr: " << virtAddr << endl;
     int i;
     unsigned int vpn, offset;
     TranslationEntry *entry;
@@ -248,7 +250,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     // if the pageFrame is too big, there is something really wrong! 
     // An invalid translation was loaded into the page table or TLB. 
     if (pageFrame >= NumPhysPages) { 
-		cout << "Illegal pageFrame" << pageFrame << endl;
 		DEBUG(dbgAddr, "Illegal pageframe " << pageFrame);
 		return BusErrorException;
     }
