@@ -33,7 +33,7 @@
 #include "main.h"
 #include "synch.h"
 
-// Lock* memoryPagingLock = NULL;
+Lock* memoryPagingLock = NULL;
 
 // Routines for converting Words and Short Words to and from the
 // simulated machine's format of little endian.  These end up
@@ -214,14 +214,14 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 	    return AddressErrorException;
 	} else if (!pageTable[vpn].valid) {
 	    DEBUG(dbgAddr, "Invalid virtual page # " << virtAddr);
-		return PageFaultException;
-		// if (memoryPagingLock == NULL)
-		// 	memoryPagingLock = new Lock("memoryPagingLock");
+		// return PageFaultException;
+		if (memoryPagingLock == NULL)
+			memoryPagingLock = new Lock("memoryPagingLock");
 
-		// memoryPagingLock->Acquire();
-		// kernel->currentThread->space->pageFault(vpn);
-		// memoryPagingLock->Release();
-
+		memoryPagingLock->Acquire();
+		kernel->currentThread->space->pageFault(vpn);
+		memoryPagingLock->Release();
+		return NoException;
 	}
 	entry = &pageTable[vpn];
     } else {

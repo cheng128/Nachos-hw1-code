@@ -114,17 +114,17 @@ ExceptionHandler(ExceptionType which)
 		}
 		case PageFaultException:
 		{
-			// cout << "page fault exception" << endl;
-			int virtualAddr = kernel->machine->ReadRegister(BadVAddrReg);
-			// cout << "Bad Address: " << virtualAddr << endl;
-			unsigned int vpn = virtualAddr / PageSize;
+			// // cout << "page fault exception" << endl;
+			// int virtualAddr = kernel->machine->ReadRegister(BadVAddrReg);
+			// // cout << "Bad Address: " << virtualAddr << endl;
+			// unsigned int vpn = virtualAddr / PageSize;
 
-			// if (memoryPagingLock == NULL)
-			// memoryPagingLock = new Lock("memoryPagingLock");
+			// // if (memoryPagingLock == NULL)
+			// // memoryPagingLock = new Lock("memoryPagingLock");
 
-			// memoryPagingLock->Acquire();
-			kernel->currentThread->space->pageFault(vpn);
-			// memoryPagingLock->Release();
+			// // memoryPagingLock->Acquire();
+			// kernel->currentThread->space->pageFault(vpn);
+			// // memoryPagingLock->Release();
 			return;
 		}
 		break;
