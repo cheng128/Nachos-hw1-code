@@ -25,7 +25,7 @@ class AddrSpace {
     ~AddrSpace();			// De-allocate an address space
 
     void Execute(char *fileName);	// Run the the program
-					// stored in the file "executable"
+					                        // stored in the file "executable"
 
     void SaveState();			// Save/restore address space-specific
     void RestoreState();		// info on a context switch 
@@ -43,9 +43,9 @@ class AddrSpace {
 
   private:
     TranslationEntry *pageTable;	// Assume linear page table translation
-					// for now!
+					                        // for now!
     unsigned int numPages;		// Number of pages in the virtual 
-					// address space
+					                    // address space
 
     bool Load(char *fileName);		// Load the program into memory
 					// return false if not found

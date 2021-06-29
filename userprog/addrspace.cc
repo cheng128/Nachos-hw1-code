@@ -299,25 +299,7 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
-    unsigned int ppn;
-    int curMax = 0;
-    for(int i=0; i<NumPhysPages; i++)
-    {
-        if(kernel->FifoTime[i] > kernel->FifoTime[curMax])
-        {
-            cout << "kernel->FifoTime[i]: " << kernel->FifoTime[i] << endl;
-            cout << "kernel->FifoTime[ppn]: " << kernel->FifoTime[ppn] << endl;
-            curMax = i;
-            kernel->FifoTime[ppn] = 0;
-        }
-    }
-    
-    ppn = curMax;
-
-    // return 0;
-
-    // kernel->UsedProcess[i]
-    // unsigned int ppn = rand() % NumPhysPages;
+    unsigned int ppn = rand() % NumPhysPages;
     return ppn;
 }
 

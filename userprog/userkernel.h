@@ -18,6 +18,7 @@
 #include "synchdisk.h"
 
 #include "synch.h"
+#include "list.h"
 
 class SynchDisk;
 class Lock;
@@ -44,8 +45,6 @@ class UserProgKernel : public ThreadedKernel {
   //<HW3
   AddrSpace *UsedProcess[NumPhysPages];
   unsigned int invertTable[NumPhysPages];
-  unsigned int FifoTime[NumPhysPages];
-  // unsigned int LRU[NumPhysPages];
   Lock* lock;
   //HW3>
 
