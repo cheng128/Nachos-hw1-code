@@ -254,6 +254,7 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 	for(unsigned int i=0; i<NumPhysPages; i++)
 	{
 		kernel->FifoTime[i] += 1;
+		cout << kernel->FifoTime[i] << endl;
 	}
 	kernel->FifoTime[pageFrame] = 0;
 	// kernel->UsedProcess[pageFrame]->LRU = 0;
