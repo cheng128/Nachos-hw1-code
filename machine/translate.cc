@@ -221,7 +221,6 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
 		memoryPagingLock->Acquire();
 		kernel->currentThread->space->pageFault(vpn);
 		memoryPagingLock->Release();
-		return NoException;
 	}
 	entry = &pageTable[vpn];
     } else {
