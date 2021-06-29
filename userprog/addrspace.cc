@@ -277,8 +277,7 @@ int AddrSpace::AllocPage(AddrSpace* space, int vpn)
         physNum = FindVictim();
         kernel->UsedProcess[physNum]->evictPage(kernel->invertTable[physNum]);
     }
-
-    kernel->machine->PhyPageStatus[physNum] = TRUE;
+    
     kernel->UsedProcess[physNum] = space;
     kernel->invertTable[physNum] = vpn;
     kernel->lock->Release();
@@ -291,6 +290,7 @@ int AddrSpace::FindFreePage()
     {
         if(kernel->machine->PhyPageStatus[i]==FALSE)
         {
+            kernel->machine->PhyPageStatus[physNum] = TRUE;
             return i;
         }
     }
