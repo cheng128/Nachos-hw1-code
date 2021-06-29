@@ -57,10 +57,10 @@ UserProgKernel::Initialize()
 {
     ThreadedKernel::Initialize();	// init multithreading
 
-	// for(unsigned int i=0; i<NumPhysPages; i++)
-	// {
-	// 	LRU[i] = 0;
-	// }
+	for(unsigned int i=0; i<NumPhysPages; i++)
+	{
+		FifoTime[i] = 0;
+	}
 
     machine = new Machine(debugUserProg);
     fileSystem = new FileSystem();

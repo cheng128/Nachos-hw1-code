@@ -299,32 +299,21 @@ int AddrSpace::FindFreePage()
 
 int AddrSpace::FindVictim()
 {
-    // int firstZero;
-    // bool found;
+    unsigned int ppn = 0;
 
-    // for (unsigned int i=0; i<NumPhysPages; i++)
-    // {
-    //     if(kernel->LRU[i] == 0)
-    //     {
-    //         firstZero = i;
-    //         found = TRUE;
-    //         break
-    //     }
-    // }
-
-    // unsigned int ppn;
-    // if(found)
-    // {
-    //     for(unsigned int i=0; i<NumPhysPages; i++)
-    //     {
-    //         if (kernel->LRU[i]==0 and )
-    //     }
-    // }
+    for(int i=0; i<NumPhysPages; i++)
+    {
+        if(kernel->FifoTime[i] > kernel->FifoTime[ppn])
+        {
+            ppn = i;
+        }
+    }
+    
 
     // return 0;
 
     // kernel->UsedProcess[i]
-    unsigned int ppn = rand() % NumPhysPages;
+    // unsigned int ppn = rand() % NumPhysPages;
     return ppn;
 }
 
