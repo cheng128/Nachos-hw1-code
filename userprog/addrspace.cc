@@ -305,6 +305,8 @@ int AddrSpace::FindVictim()
     {
         if(kernel->FifoTime[i] > kernel->FifoTime[ppn])
         {
+            cout << "kernel->FifoTime[i]: " << kernel->FifoTime[i] << endl;
+            cout << "kernel->FifoTime[ppn]: " << kernel->FifoTime[ppn] << endl;
             ppn = i;
             kernel->FifoTime[ppn] = 0;
         }
