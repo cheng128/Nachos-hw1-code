@@ -251,20 +251,10 @@ Machine::Translate(int virtAddr, int* physAddr, int size, bool writing)
     }
     entry->use = TRUE;		// set the use, dirty bits
 
-	for(unsigned int i=0; i<NumPhysPages; i++)
-	{
-		kernel->FifoTime[i] += 1;
-		cout << kernel->FifoTime[i] << endl;
-	}
-	kernel->FifoTime[pageFrame] = 0;
-	// kernel->UsedProcess[pageFrame]->LRU = 0;
 
     if (writing)
 		entry->dirty = TRUE;
     *physAddr = pageFrame * PageSize + offset;
-	// cout << "phys addr = " << *physAddr << endl;
-	// cout << "thread = " << kernel->currentThread->getName()<< endl;
-	// cout << "Used Process " << kernel->invertTable[pageFrame] << endl;
     ASSERT((*physAddr >= 0) && ((*physAddr + size) <= MemorySize));
     DEBUG(dbgAddr, "phys addr = " << *physAddr);
     return NoException;
